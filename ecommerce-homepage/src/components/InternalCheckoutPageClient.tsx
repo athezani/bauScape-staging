@@ -740,7 +740,7 @@ export function InternalCheckoutPageClient() {
                 <Checkbox
                   id="isB2B"
                   checked={isB2B}
-                  onCheckedChange={(checked) => setIsB2B(checked === true)}
+                  onCheckedChange={(checked: boolean) => setIsB2B(checked === true)}
                   className="h-5 w-5 shrink-0"
                 />
                 <Label htmlFor="isB2B" className="form-label cursor-pointer mb-0" style={{ color: 'var(--text-dark)' }}>
