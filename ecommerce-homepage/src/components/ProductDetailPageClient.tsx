@@ -266,7 +266,9 @@ export function ProductDetailPageClient({ product }: ProductDetailPageClientProp
       logger.debug('ProductDetailPage: Trip without selected slot, trying to load directly', {
         productId: product.id,
         selectedSlotId,
-        selectedDate
+        selectedDate,
+        guests: finalGuests,
+        dogs
       });
       
       // Try to load slot directly as fallback
@@ -359,6 +361,16 @@ export function ProductDetailPageClient({ product }: ProductDetailPageClientProp
 
         // Now try to load the slot - don't filter by future date for trips
         // because a trip might have started but still be bookable
+        logger.debug('ProductDetailPage: Loading trip slots in handleBooking', {
+          productId: product.id,
+          tripData: {
+            active: tripData.active,
+            start_date: tripData.start_date,
+            end_date: tripData.end_date,
+            duration_days: tripData.duration_days,
+          }
+        });
+        
         let slotsQuery = supabase
           .from('availability_slot')
           .select('id, date, time_slot, max_adults, max_dogs, booked_adults, booked_dogs')
@@ -369,10 +381,26 @@ export function ProductDetailPageClient({ product }: ProductDetailPageClientProp
 
         // Only filter by future date if trip hasn't started yet
         if (tripData.start_date && tripData.start_date >= today) {
+          logger.debug('ProductDetailPage: Filtering slots by future date', {
+            start_date: tripData.start_date,
+            today
+          });
           slotsQuery = slotsQuery.gte('date', today);
+        } else {
+          logger.debug('ProductDetailPage: Not filtering by future date (trip may have started)', {
+            start_date: tripData.start_date,
+            today
+          });
         }
 
         const { data: slots, error } = await slotsQuery;
+        
+        logger.debug('ProductDetailPage: Slots query executed', {
+          productId: product.id,
+          error: error ? error.message : null,
+          slotsCount: slots?.length || 0,
+          slots: slots?.map(s => ({ id: s.id, date: s.date, time_slot: s.time_slot }))
+        });
 
         if (error) {
           logger.error('ProductDetailPage: Error loading trip slots in handleBooking', { 
@@ -429,13 +457,24 @@ export function ProductDetailPageClient({ product }: ProductDetailPageClientProp
           setSelectedSlotId(tripSlot.id);
           setSelectedDate(tripSlot.date);
           setSelectedTimeSlot(null);
-          // Wait a moment for state to update
+          // Wait a moment for state to update, then continue with booking
           await new Promise(resolve => setTimeout(resolve, 100));
+          // Continue with booking flow - don't return here
+          logger.debug('ProductDetailPage: Trip slot selected, continuing with booking', {
+            slotId: tripSlot.id,
+            date: tripSlot.date
+          });
         } else {
           logger.warn('ProductDetailPage: No trip slots available', {
             productId: product.id,
-            tripData,
-            queryFilters: 'product_id, product_type=trip'
+            tripData: {
+              active: tripData.active,
+              start_date: tripData.start_date,
+              end_date: tripData.end_date,
+              duration_days: tripData.duration_days,
+            },
+            queryFilters: 'product_id, product_type=trip',
+            slotsQueryResult: slots
           });
           setError('Il viaggio non è al momento disponibile. Si prega di ricaricare la pagina e riprovare più tardi.');
           setIsProcessing(false);
