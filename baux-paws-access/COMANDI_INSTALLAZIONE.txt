@@ -1,0 +1,21 @@
+# Comandi da Eseguire per Installare Tools
+
+## Copia e incolla questi comandi uno alla volta:
+
+# 1. Installa Homebrew (se non presente)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 2. Installa PostgreSQL (psql)
+brew install postgresql@15
+
+# 3. Installa Deno
+brew install deno
+
+# 4. Verifica installazione
+which psql deno node npm supabase
+psql --version
+deno --version
+
+
+
+

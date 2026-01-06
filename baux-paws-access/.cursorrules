@@ -1,0 +1,771 @@
+# Bauscape Provider Portal - Cursor AI Context
+
+> **This file provides complete context for AI-assisted development and migration.**
+
+---
+
+## 📋 PROJECT OVERVIEW
+
+### Business Context
+- **Product**: Bauscape Provider Portal - a backoffice for local providers selling dog & human experiences/trips through the Bauscape Shopify marketplace (www.bauscape.com)
+- **Purpose**: Allow providers to view and manage their booking information
+- **Note**: Availability management is handled externally - this portal is READ-ONLY for booking data
+
+### User Roles
+| Role | Access | Redirect |
+|------|--------|----------|
+| **Admin** | Full admin panel, provider management, signup codes, analytics | `/admin` |
+| **Provider** | Own bookings dashboard, calendar, analytics | `/dashboard` |
+
+### Authentication Flow
+1. Signup requires a single-use invitation code (managed by admin)
+2. Email/password authentication via Supabase Auth
+3. Auto-confirm email enabled (no email verification)
+4. Role-based redirect after login
+
+---
+
+## 🏗️ ARCHITECTURE
+
+### Tech Stack
+```
+Frontend:       React 18 + TypeScript + Vite
+Styling:        Tailwind CSS + shadcn/ui
+State:          React Query (TanStack Query) + useState
+Routing:        React Router v6
+Backend:        Supabase (via Lovable Cloud)
+Charts:         Recharts
+Date Utils:     date-fns
+Validation:     Zod
+```
+
+### Folder Structure
+```
+src/
+├── components/           # UI Components
+│   ├── ui/              # shadcn/ui base components (DO NOT EDIT - auto-generated)
+│   ├── common/          # Shared/reusable components
+│   │   ├── DashboardHeader.tsx
+│   │   ├── DashboardStats.tsx
+│   │   ├── NavLink.tsx
+│   │   └── index.ts
+│   ├── booking/         # Booking-related components
+│   │   ├── BookingCard.tsx
+│   │   ├── EventCard.tsx
+│   │   └── index.ts
+│   ├── admin/           # Admin panel components
+│   │   ├── ProductForm.tsx
+│   │   ├── ProductList.tsx
+│   │   └── index.ts
+│   └── [legacy]         # Components at root level (to be migrated)
+│
+├── pages/               # Route components
+│   ├── Index.tsx        # Landing page (/)
+│   ├── Auth.tsx         # Login/Signup (/auth)
+│   ├── Dashboard.tsx    # Provider dashboard (/dashboard)
+│   ├── Orders.tsx       # Order management (/orders)
+│   ├── Analytics.tsx    # Provider analytics (/analytics)
+│   ├── Admin.tsx        # Admin panel (/admin)
+│   └── NotFound.tsx     # 404 page (*)
+│
+├── services/            # Business logic & API calls
+│   ├── booking.service.ts
+│   ├── provider.service.ts
+│   ├── auth.service.ts
+│   ├── product.service.ts
+│   ├── adapters/        # ⚠️ EXTERNAL SERVICE ADAPTERS
+│   │   ├── auth.adapter.ts      # Auth provider abstraction
+│   │   ├── database.adapter.ts  # Database operations abstraction
+│   │   ├── email.adapter.ts     # Email notification abstraction
+│   │   ├── order.adapter.ts     # Order/webhook processing
+│   │   └── index.ts
+│   └── index.ts
+│
+├── types/               # TypeScript interfaces
+│   ├── booking.types.ts
+│   ├── provider.types.ts
+│   ├── product.types.ts
+│   └── index.ts
+│
+├── config/              # Configuration & constants
+│   ├── constants.ts
+│   ├── external-services.ts  # ⚠️ EXTERNAL SERVICE CONFIG
+│   └── index.ts
+│
+├── hooks/               # Custom React hooks
+│   ├── use-toast.ts
+│   └── use-mobile.tsx
+│
+├── lib/                 # Utility functions
+│   └── utils.ts         # cn() helper for className merging
+│
+├── integrations/        # External service clients
+│   └── supabase/
+│       ├── client.ts    # Supabase client (DO NOT EDIT - auto-generated)
+│       └── types.ts     # Database types (DO NOT EDIT - auto-generated)
+│
+└── App.tsx              # Main app with routing
+
+supabase/
+├── functions/           # Edge Functions
+│   └── auto-complete-bookings/index.ts
+└── config.toml          # Supabase config (DO NOT EDIT)
+```
+
+---
+
+## 🔌 EXTERNAL SERVICES INTEGRATION
+
+> **⚠️ CRITICAL FOR CURSOR AI**: The following features are designed to be managed by EXTERNAL MODULES.
+> When modifying these areas, USE THE ADAPTER INTERFACES to ensure compatibility with future external integrations.
+
+### Overview
+
+The application is architected to support external service integration through adapter patterns:
+
+| Service | Current Provider | Future Provider | Adapter Location |
+|---------|-----------------|-----------------|------------------|
+| **Authentication** | Supabase Auth | Auth0/Firebase/Custom | `src/services/adapters/auth.adapter.ts` |
+| **Database** | Supabase | Direct REST API | `src/services/adapters/database.adapter.ts` |
+| **Email** | Disabled | Resend/SendGrid/SES | `src/services/adapters/email.adapter.ts` |
+| **Orders** | Manual | Shopify Webhooks | `src/services/adapters/order.adapter.ts` |
+
+### Configuration
+
+All external service settings are in `src/config/external-services.ts`:
+
+```typescript
+export const featureFlags = {
+  useExternalAuth: false,           // Use external auth provider
+  emailNotificationsEnabled: false, // Enable email notifications
+  shopifyIntegrationEnabled: false, // Enable Shopify order sync
+  autoCompleteBookingsEnabled: true,
+};
+```
+
+### 1. Authentication Adapter (`auth.adapter.ts`)
+
+**Interface**: `IAuthAdapter`
+
+```typescript
+interface IAuthAdapter {
+  getCurrentUser(): Promise<AuthUser | null>;
+  getCurrentSession(): Promise<AuthSession | null>;
+  signIn(credentials: AuthCredentials): Promise<AuthResult>;
+  signUp(data: SignupData): Promise<AuthResult>;
+  signOut(): Promise<void>;
+  checkUserRole(userId: string, role: UserRole): Promise<boolean>;
+  onAuthStateChange(callback: AuthStateChangeCallback): () => void;
+}
+```
+
+**To integrate external auth:**
+1. Create new adapter class implementing `IAuthAdapter`
+2. Update `getAuthAdapter()` factory function
+3. Set `featureFlags.useExternalAuth = true`
+
+### 2. Email Notification Adapter (`email.adapter.ts`)
+
+**Interface**: `IEmailAdapter`
+
+**Supported Templates:**
+- `booking_created` - Notify provider of new booking
+- `booking_updated` - Notify provider of booking changes
+- `booking_confirmed` - Confirm booking to customer
+- `booking_cancelled` - Notify cancellation
+- `booking_completed` - Activity completion notice
+- `provider_welcome` - Welcome email for new providers
+
+**Usage:**
+```typescript
+import { emailService } from '@/services/adapters';
+
+// Notify provider of new booking
+await emailService.notifyProviderNewBooking(
+  providerEmail,
+  providerName,
+  bookingData
+);
+```
+
+**To enable:**
+1. Configure `RESEND_API_KEY` in Supabase secrets
+2. Create edge function for email sending
+3. Implement `ResendEmailAdapter` or custom adapter
+4. Set `featureFlags.emailNotificationsEnabled = true`
+
+### 3. Order Processing Adapter (`order.adapter.ts`)
+
+**Interface**: `IOrderAdapter`
+
+**Webhook Events:**
+- `order.created` - New order from Shopify
+- `order.updated` - Order modification
+- `order.cancelled` - Order cancellation
+- `order.refunded` - Refund processed
+
+**Flow:**
+```
+Shopify Order → Webhook → Edge Function → OrderAdapter → Create Booking → Email Notification
+```
+
+**To enable Shopify integration:**
+1. Create edge function `supabase/functions/shopify-webhook/`
+2. Configure webhook secret in Supabase secrets
+3. Set provider mapping (Shopify product ID → provider ID)
+4. Set `featureFlags.shopifyIntegrationEnabled = true`
+
+### 4. Database Adapter (`database.adapter.ts`)
+
+**Interface**: `IDatabaseAdapter`
+
+Provides abstraction for all database operations. Currently uses Supabase client directly, but can be extended for:
+- Direct REST API calls
+- Edge function database access
+- External database providers
+
+**Methods:**
+- `getBookings(providerId)` / `createBooking(data)`
+- `getProviders()` / `updateProvider(id, data)`
+- `getProducts()` / `createProduct(data)` / `deleteProduct(type, id)`
+
+---
+
+## 📊 DATABASE SCHEMA
+
+### Tables (singular naming convention)
+
+#### `profile` - Provider profiles
+```sql
+id          UUID PRIMARY KEY (references auth.users)
+company_name TEXT NOT NULL
+contact_name TEXT NOT NULL
+email       TEXT NOT NULL
+phone       TEXT
+active      BOOLEAN DEFAULT true
+created_at  TIMESTAMPTZ
+updated_at  TIMESTAMPTZ
+```
+
+#### `booking` - Customer bookings
+```sql
+id              UUID PRIMARY KEY
+provider_id     UUID NOT NULL (FK → profile)
+customer_name   TEXT NOT NULL
+customer_email  TEXT NOT NULL
+customer_phone  TEXT
+product_name    TEXT NOT NULL
+product_description TEXT
+product_type    ENUM ('experience', 'trip') DEFAULT 'experience'
+event_type      ENUM ('class', 'experience', 'trip')
+event_id        UUID (FK → class/experience/trip)
+booking_date    DATE NOT NULL
+end_date        DATE (for multi-day trips)
+booking_time    TIME
+number_of_dogs  INTEGER DEFAULT 1
+number_of_humans INTEGER DEFAULT 1
+total_amount    NUMERIC
+status          TEXT DEFAULT 'pending' ('pending'|'confirmed'|'completed'|'cancelled')
+special_requests TEXT
+shopify_order_id TEXT
+created_at      TIMESTAMPTZ
+updated_at      TIMESTAMPTZ
+```
+
+#### `class`, `experience`, `trip` - Event tables
+```sql
+-- Common fields
+id              UUID PRIMARY KEY
+provider_id     UUID NOT NULL
+name            TEXT NOT NULL
+description     TEXT
+max_participants INTEGER DEFAULT 10
+pricing_type    ENUM ('linear', 'predefined') DEFAULT 'linear'
+price_adult_base NUMERIC
+price_dog_base  NUMERIC
+predefined_prices JSONB
+created_at      TIMESTAMPTZ
+updated_at      TIMESTAMPTZ
+
+-- class/experience specific
+duration_hours  INTEGER
+meeting_point   TEXT
+
+-- trip specific
+duration_days   INTEGER
+start_date      DATE
+end_date        DATE
+location        TEXT
+booking_qty     INTEGER DEFAULT 0
+```
+
+#### `user_role` - User permissions
+```sql
+id          UUID PRIMARY KEY
+user_id     UUID NOT NULL (FK → auth.users)
+role        ENUM ('admin', 'provider') NOT NULL
+created_at  TIMESTAMPTZ
+```
+
+#### `signup_code` - Invitation codes
+```sql
+id          UUID PRIMARY KEY
+code        TEXT NOT NULL UNIQUE
+used        BOOLEAN DEFAULT false
+used_by     UUID (FK → auth.users)
+used_at     TIMESTAMPTZ
+created_at  TIMESTAMPTZ
+```
+
+### RLS Policies Summary
+| Table | Policy |
+|-------|--------|
+| profile | Admins: full access; Providers: own profile only |
+| booking | Admins: view all; Providers: own bookings only; INSERT denied |
+| class/experience/trip | Providers: own events only |
+| user_role | Admins: full access; Users: view own role only |
+| signup_code | Admins only |
+
+### Database Functions
+```sql
+-- Check if user has specific role
+has_role(user_id UUID, role app_role) → BOOLEAN
+
+-- Validate and consume signup code (used during registration)
+validate_signup_code(code TEXT, user_id UUID) → BOOLEAN
+
+-- Validate booking status transitions
+validate_booking_status_change(booking_id UUID, new_status TEXT) → BOOLEAN
+
+-- Generate new signup code (admin only)
+generate_signup_code() → TEXT
+
+-- Auto-update updated_at column
+update_updated_at_column() → TRIGGER
+
+-- Create profile on user signup
+handle_new_user() → TRIGGER
+```
+
+---
+
+## 🎨 DESIGN SYSTEM
+
+### Theme: Nature-inspired palette (earthy greens + warm browns)
+
+### Color Tokens (HSL format in index.css)
+```css
+/* Light Mode */
+--background: 36 39% 98%;     /* Warm off-white */
+--foreground: 150 25% 15%;    /* Dark forest green */
+--primary: 150 50% 35%;       /* Forest green */
+--secondary: 36 30% 88%;      /* Warm beige */
+--accent: 27 87% 67%;         /* Warm orange */
+--muted: 36 20% 92%;
+--destructive: 0 84.2% 60.2%;
+--success: 150 60% 45%;
+--warning: 45 93% 47%;
+--info: 210 100% 56%;
+
+/* Dark Mode */
+--background: 150 20% 12%;
+--foreground: 36 30% 95%;
+--primary: 150 50% 45%;
+/* ... similar structure */
+```
+
+### Tailwind Classes (use these, NOT raw colors)
+```tsx
+// ✅ CORRECT
+className="bg-background text-foreground"
+className="bg-primary text-primary-foreground"
+className="bg-muted text-muted-foreground"
+className="text-success"
+className="border-border"
+
+// ❌ WRONG - Never use raw colors
+className="bg-white text-black"
+className="bg-green-500"
+```
+
+### Status Colors Pattern
+```tsx
+const statusColors = {
+  pending: "bg-warning/10 text-warning border-warning/20",
+  confirmed: "bg-success/10 text-success border-success/20",
+  completed: "bg-info/10 text-info border-info/20",
+  cancelled: "bg-destructive/10 text-destructive border-destructive/20",
+};
+```
+
+---
+
+## 📝 TYPE DEFINITIONS
+
+### Core Types (from src/types/)
+
+```typescript
+// booking.types.ts
+type BookingStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled';
+type EventType = 'class' | 'experience' | 'trip';
+type ProductType = 'class' | 'experience' | 'trip';
+
+interface Event {
+  id: string;
+  name: string;
+  description: string | null;
+  provider_id: string;
+}
+
+interface Booking {
+  id: string;
+  customer_name: string;
+  customer_email: string;
+  customer_phone: string | null;
+  event_type: EventType;
+  event_id: string | null;
+  product_name?: string;
+  product_description?: string | null;
+  product_type?: ProductType;
+  booking_date: string;
+  end_date: string | null;
+  booking_time: string | null;
+  number_of_dogs: number;
+  number_of_humans: number;
+  total_amount: number | null;
+  status: BookingStatus;
+  special_requests: string | null;
+  shopify_order_id: string | null;
+  created_at: string;
+  provider_id: string;
+  event?: Event;
+}
+
+interface EventGroup {
+  eventKey: string;
+  eventName: string;
+  eventType: EventType;
+  bookingDate: string;
+  endDate: string | null;
+  bookingTime: string | null;
+  bookings: Booking[];
+}
+
+interface BookingStats {
+  total: number;
+  pending: number;
+  confirmed: number;
+  completed: number;
+  cancelled: number;
+}
+
+// provider.types.ts
+type AppRole = 'admin' | 'provider';
+
+interface Provider {
+  id: string;
+  company_name: string;
+  contact_name: string;
+  email: string;
+  phone: string | null;
+  active: boolean;
+  created_at: string;
+  updated_at?: string;
+}
+
+interface SignupCode {
+  id: string;
+  code: string;
+  used: boolean;
+  used_at: string | null;
+  used_by?: string | null;
+  created_at: string;
+}
+```
+
+---
+
+## 🔧 SERVICE LAYER
+
+### booking.service.ts
+```typescript
+// Fetch bookings
+fetchProviderBookings(providerId: string): Promise<Booking[]>
+fetchFutureBookings(providerId: string): Promise<Booking[]>
+fetchBookingsWithEvents(providerId: string): Promise<Booking[]>
+fetchBookingStats(providerId: string): Promise<BookingStats>
+
+// Update operations
+updateBookingStatus(bookingId: string, newStatus: BookingStatus): Promise<void>
+validateStatusChange(bookingId: string, newStatus: BookingStatus): Promise<boolean>
+
+// Utilities
+groupBookingsByEvent(bookings: Booking[]): EventGroup[]
+fetchEventDetails(eventType: string, eventId: string): Promise<Event | null>
+
+// Realtime
+subscribeToBookingChanges(providerId: string, callback: () => void): () => void
+```
+
+### provider.service.ts
+```typescript
+fetchProviders(): Promise<Provider[]>
+fetchProviderBookingStats(): Promise<Record<string, ProviderBookingStats>>
+updateProviderStatus(providerId: string, active: boolean): Promise<void>
+fetchSignupCodes(): Promise<SignupCode[]>
+generateSignupCode(): Promise<string>
+subscribeToSignupCodeChanges(callback: () => void): () => void
+subscribeToProfileChanges(callback: () => void): () => void
+```
+
+### auth.service.ts
+```typescript
+checkIsAdmin(userId: string): Promise<boolean>
+hasRole(userId: string, role: AppRole): Promise<boolean>
+getUserRedirectPath(userId: string): Promise<string>
+signOut(): Promise<void>
+validateSignupCode(code: string, userId: string): Promise<boolean>
+```
+
+---
+
+## 🧩 COMPONENT PATTERNS
+
+### Standard Component Structure
+```tsx
+/**
+ * ComponentName
+ * Brief description
+ */
+
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { SomeType } from "@/types";
+
+interface ComponentNameProps {
+  propName: string;
+}
+
+export const ComponentName = ({ propName }: ComponentNameProps) => {
+  const [state, setState] = useState<SomeType | null>(null);
+  
+  // ... implementation
+  
+  return (
+    <Card>
+      {/* content */}
+    </Card>
+  );
+};
+```
+
+### Page Component Structure
+```tsx
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { DashboardHeader } from "@/components/common";
+import { useToast } from "@/hooks/use-toast";
+import { User } from "@supabase/supabase-js";
+
+const PageName = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+      if (!session) navigate("/auth");
+    });
+
+    // Initial session check
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      if (!session) navigate("/auth");
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) toast({ title: "Logout failed", description: error.message, variant: "destructive" });
+  };
+
+  if (loading) return <LoadingSpinner />;
+  if (!user) return null;
+
+  return (
+    <div className="min-h-screen bg-background">
+      <DashboardHeader onLogout={handleLogout} />
+      <main className="container mx-auto px-4 py-8">
+        {/* content */}
+      </main>
+    </div>
+  );
+};
+
+export default PageName;
+```
+
+---
+
+## 📅 BOOKING STATUS LIFECYCLE
+
+```
+┌─────────┐    confirm    ┌───────────┐    auto-complete    ┌───────────┐
+│ PENDING │──────────────▶│ CONFIRMED │────────────────────▶│ COMPLETED │
+└─────────┘               └───────────┘     (end_date < today)└───────────┘
+     │                          │
+     │         cancel           │ cancel
+     └──────────────────────────┴──────────────────────▶ ┌───────────┐
+                                                         │ CANCELLED │
+                                                         └───────────┘
+```
+
+**Rules:**
+- `pending` → `confirmed` or `cancelled` (manual)
+- `confirmed` → `completed` (auto, via edge function) or `cancelled` (manual)
+- `completed` and `cancelled` are terminal states
+
+---
+
+## 🔌 EDGE FUNCTIONS
+
+### auto-complete-bookings
+**Purpose**: Automatically transition confirmed bookings to completed after end_date passes
+**Trigger**: Scheduled/manual invocation
+**Logic**:
+1. Find all bookings where `status = 'confirmed'` AND `end_date < today`
+2. Update status to `completed`
+3. Return count of updated bookings
+
+---
+
+## 🚀 ROUTES
+
+| Path | Component | Access | Description |
+|------|-----------|--------|-------------|
+| `/` | Index | Public | Landing page |
+| `/auth` | Auth | Public | Login/Signup |
+| `/dashboard` | Dashboard | Provider | Main dashboard with stats, list/calendar tabs |
+| `/orders` | Orders | Provider | Order management |
+| `/analytics` | Analytics | Provider | Provider-specific analytics |
+| `/admin` | Admin | Admin | Admin panel with providers, analytics, codes tabs |
+| `*` | NotFound | Public | 404 page |
+
+---
+
+## ⚠️ CRITICAL RULES
+
+### DO NOT MODIFY (auto-generated)
+- `src/integrations/supabase/client.ts`
+- `src/integrations/supabase/types.ts`
+- `src/components/ui/*` (shadcn components)
+- `supabase/config.toml`
+- `.env`
+
+### NAMING CONVENTIONS
+- **Files**: PascalCase for components, camelCase for utilities/services
+- **Tables**: Singular (booking, profile, trip, NOT bookings, profiles)
+- **Types**: PascalCase (Booking, Provider, EventGroup)
+- **Functions**: camelCase (fetchBookings, handleStatusUpdate)
+- **Constants**: SCREAMING_SNAKE_CASE (STATUS_COLORS)
+
+### IMPORT PATTERNS
+```typescript
+// Types - always from @/types
+import type { Booking, Provider } from '@/types';
+
+// Services - from @/services
+import { fetchBookings, updateBookingStatus } from '@/services';
+
+// Components - from relative paths or @/components
+import { DashboardHeader } from '@/components/common';
+import { Card } from '@/components/ui/card';
+
+// Supabase - always from integrations
+import { supabase } from '@/integrations/supabase/client';
+```
+
+### UI PATTERNS
+- Use `useToast()` for user feedback
+- Loading states: spinner + "Loading..." text
+- Error handling: toast with `variant: "destructive"`
+- Date formatting: `date-fns` with Italian locale (`it`)
+- Currency: Euro (€) with Italian number formatting
+
+---
+
+## 🔄 MIGRATION CHECKLIST
+
+### Remaining Work (Nice-to-Have)
+- [ ] Migrate `BookingList.tsx`, `CalendarView.tsx` to `src/components/booking/`
+- [ ] Migrate `EventBookingsDialog.tsx`, `ProductBookingsDialog.tsx`, `BookingDetailDialog.tsx` to `src/components/booking/`
+- [ ] Create `src/components/admin/` and split `Admin.tsx` into smaller components
+- [ ] Refactor pages to use service layer instead of direct Supabase calls
+- [ ] Create custom hooks (`useBookings`, `useProviderStats`)
+- [ ] Add JSDoc comments to main components
+- [ ] Delete legacy re-export files after updating imports
+
+### Files to Potentially Refactor
+| File | Lines | Issue |
+|------|-------|-------|
+| `src/pages/Admin.tsx` | 506+ | Too large, should split |
+| `src/pages/Analytics.tsx` | 596+ | Too large, consider splitting charts |
+| `src/services/booking.service.ts` | 235 | Approaching limit |
+
+---
+
+## 🔐 SECURITY NOTES
+
+- All tables have RLS enabled
+- Provider data isolation: providers can ONLY access their own data
+- Booking creation denied via RLS (bookings come from external Shopify system)
+- Admin-only operations protected by `has_role()` function
+- Signup codes are single-use and validated server-side
+- NEVER expose API keys in frontend code
+
+---
+
+## 📦 KEY DEPENDENCIES
+
+```json
+{
+  "@supabase/supabase-js": "^2.81.0",
+  "@tanstack/react-query": "^5.83.0",
+  "react-router-dom": "^6.30.1",
+  "recharts": "^2.15.4",
+  "date-fns": "^3.6.0",
+  "zod": "^3.25.76",
+  "lucide-react": "^0.462.0",
+  "class-variance-authority": "^0.7.1",
+  "tailwind-merge": "^2.6.0"
+}
+```
+
+---
+
+## 🌐 ENVIRONMENT
+
+```env
+VITE_SUPABASE_URL=https://ahzwwsgpjwlguudihqbn.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=<anon_key>
+VITE_SUPABASE_PROJECT_ID=ahzwwsgpjwlguudihqbn
+```
+
+---
+
+## 📚 RELATED DOCUMENTATION
+
+- [Supabase Docs](https://supabase.com/docs)
+- [shadcn/ui](https://ui.shadcn.com)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [React Router](https://reactrouter.com)
+- [TanStack Query](https://tanstack.com/query)
+- [Recharts](https://recharts.org)

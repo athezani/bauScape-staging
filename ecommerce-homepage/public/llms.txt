@@ -1,0 +1,37 @@
+# FlixDog
+
+> Piattaforma per prenotare viaggi, esperienze e attività dog-friendly in tutta Italia. Scopri esperienze uniche pensate per te e il tuo cane.
+
+## Homepage
+
+- [Homepage](https://flixdog.com/)
+  La pagina principale di FlixDog dove puoi scoprire le migliori esperienze, viaggi e attività per te e il tuo cane. Presenta una selezione curata di prodotti dog-friendly disponibili in tutta Italia.
+
+## Categorie Prodotti
+
+- [Esperienze](https://flixdog.com/esperienze)
+  Esplora la collezione completa di esperienze dog-friendly: attività giornaliere, escursioni, eventi e avventure pensate per condividere momenti speciali con il tuo cane.
+
+- [Viaggi](https://flixdog.com/viaggi)
+  Scopri vacanze e viaggi dog-friendly in tutta Italia. Weekend romantici, vacanze al mare, in montagna o in città - tutte le destinazioni che accolgono te e il tuo amico a quattro zampe.
+
+- [Classi](https://flixdog.com/classi)
+  Corsi e lezioni specializzate per cani e proprietari. Dalla formazione base all'addestramento avanzato, scopri le classi disponibili per migliorare il rapporto con il tuo cane.
+
+## Informazioni e Supporto
+
+- [Contatti](https://flixdog.com/contatti)
+  Pagina di contatto per supporto clienti, informazioni su prenotazioni, assistenza per viaggi con cani e risposte a domande frequenti sulle attività dog-friendly disponibili.
+
+- [Cookie Policy](https://flixdog.com/cookie-policy)
+  Informativa completa sull'utilizzo dei cookie e delle tecnologie di tracciamento sul sito FlixDog, in conformità con la normativa sulla privacy.
+
+- [Regolamento a 6 Zampe](https://flixdog.com/regolamento-a-6-zampe)
+  Linee guida e norme per garantire un'esperienza sicura e piacevole durante attività, viaggi e corsi con il tuo cane. Regole di comportamento e sicurezza per tutti i partecipanti.
+
+## Informazioni Aziendali
+
+FlixDog è una piattaforma e-commerce specializzata nella prenotazione di esperienze, viaggi e attività dog-friendly in Italia. Offriamo una vasta gamma di prodotti che permettono ai proprietari di cani di condividere avventure e momenti speciali con i loro amici a quattro zampe.
+
+La piattaforma supporta prenotazioni online sicure tramite integrazione con Stripe, gestisce disponibilità in tempo reale e offre un'esperienza utente ottimizzata per la ricerca e la prenotazione di attività pet-friendly.
+

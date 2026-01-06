@@ -1,0 +1,27 @@
+/* Program list styles - Override global reset */
+.program-activities-list {
+  list-style-type: disc !important;
+  list-style: disc outside none !important;
+  padding-left: 1.5rem !important;
+  margin-left: 0 !important;
+}
+
+.program-activities-list li {
+  display: list-item !important;
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+  padding-left: 0.5rem !important;
+  margin-left: 0 !important;
+}
+
+/* Ensure bullets are visible on all devices */
+@media (max-width: 768px) {
+  .program-activities-list {
+    padding-left: 1.25rem !important;
+  }
+  
+  .program-activities-list li {
+    padding-left: 0.375rem !important;
+  }
+}
+

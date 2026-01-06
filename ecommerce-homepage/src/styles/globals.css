@@ -1,0 +1,185 @@
+/* Font Ubuntu ora caricato tramite next/font in layout.tsx */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    font-family: var(--font-ubuntu, 'Ubuntu', sans-serif);
+  }
+  
+  body {
+    @apply bg-white text-gray-900;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  h4 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  p {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  small {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+
+:root {
+  /* FlixDog core palette */
+  --primary-purple: #1A0841; /* main brand purple */
+  --accent-orange: #F8AA5C;  /* CTA / accent color */
+  --accent-soft: #FFC68D;    /* soft accent for backgrounds */
+
+  --bg-white: #FFFFFF;
+  --bg-light: #F9FAFB;
+  --text-dark: #111827;
+  --text-gray: #6B7280;
+}
+
+@layer components {
+  .form-field-wrapper {
+    @apply w-full;
+  }
+
+  .form-label {
+    @apply text-sm md:text-base block mb-2;
+  }
+
+  input.form-input,
+  input[data-slot="input"].form-input {
+    border-color: var(--accent-orange) !important;
+    border-width: 1px !important;
+  }
+
+  input.form-input:focus,
+  input.form-input:focus-visible,
+  input[data-slot="input"].form-input:focus,
+  input[data-slot="input"].form-input:focus-visible {
+    border-color: var(--accent-orange) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(248, 170, 92, 0.1) !important;
+    --tw-ring-color: var(--accent-orange) !important;
+  }
+
+  input.form-input:hover,
+  input[data-slot="input"].form-input:hover {
+    border-color: var(--accent-orange) !important;
+  }
+
+  /* ==========================================
+     SELECT DROPDOWN FIXES - MAXIMUM SPECIFICITY
+     ========================================== */
+  
+  /* NUCLEAR OPTION: Hide ALL scroll buttons with maximum specificity */
+  [data-radix-select-scroll-up-button],
+  div[data-radix-select-scroll-up-button],
+  button[data-radix-select-scroll-up-button],
+  [role="presentation"][data-radix-select-scroll-up-button],
+  [data-radix-select-scroll-down-button],
+  div[data-radix-select-scroll-down-button],
+  button[data-radix-select-scroll-down-button],
+  [role="presentation"][data-radix-select-scroll-down-button],
+  [data-slot="select-scroll-up-button"],
+  [data-slot="select-scroll-down-button"],
+  [data-radix-select-viewport] > :first-child:not([data-slot="select-item"]),
+  [data-radix-select-viewport] > :last-child:not([data-slot="select-item"]) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+
+  /* Force dropdown content size */
+  [data-slot="select-content"],
+  [data-radix-select-content] {
+    max-height: 200px !important;
+    overflow: hidden !important;
+  }
+
+  /* Force viewport size - exactly 5 items (37px each = 185px) */
+  [data-radix-select-viewport],
+  [data-radix-popper-content-wrapper] [data-radix-select-viewport] {
+    height: 185px !important;
+    max-height: 185px !important;
+    min-height: 185px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+
+  /* Force item size with MAXIMUM padding left */
+  [data-slot="select-item"],
+  [data-radix-select-item],
+  div[data-slot="select-item"],
+  div[data-radix-select-item],
+  [role="option"] {
+    height: 37px !important;
+    min-height: 37px !important;
+    max-height: 37px !important;
+    padding-left: 1.25rem !important;
+    padding-right: 2rem !important;
+    padding-top: 0.625rem !important;
+    padding-bottom: 0.625rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Ensure the text has proper spacing */
+  [data-slot="select-item"] > span,
+  [data-radix-select-item] > span {
+    padding-left: 0.25rem !important;
+  }
+
+  /* ELIMINATE ALL CHECK ICONS - NO VISUAL INDICATOR FOR SELECTED ITEM */
+  [data-radix-select-item-indicator],
+  [data-slot="select-item-indicator"],
+  span[data-radix-select-item-indicator],
+  [data-radix-select-item] [data-radix-select-item-indicator],
+  [data-slot="select-item"] span:has(svg) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* Hide checkmark icon specifically */
+  [data-slot="select-item"] svg,
+  [data-radix-select-item] svg {
+    display: none !important;
+  }
+}

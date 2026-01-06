@@ -1,0 +1,38 @@
+.vercel
+.env*.local
+.env
+.env.*
+!.env.example
+
+# Secrets
+*.key
+*.secret
+*secret*
+*password*
+*credential*
+*api-key*
+*token*
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

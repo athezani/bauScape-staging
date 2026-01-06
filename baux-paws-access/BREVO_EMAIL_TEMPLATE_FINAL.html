@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+    <title>Conferma Prenotazione - bauScape</title>
+    <style>
+        :root {
+            color-scheme: light;
+            supported-color-schemes: light;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5 !important;
+            line-height: 1.6;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff !important;
+        }
+        .header {
+            background: linear-gradient(135deg, #591F82 0%, #7B2FA8 100%);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .success-icon {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .success-icon-circle {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background-color: #dcfce7;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 80px;
+            margin: 0 auto;
+            vertical-align: middle;
+        }
+        .success-icon-text {
+            font-size: 48px;
+            color: #16a34a;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #111827 !important;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .confirmation-text {
+            font-size: 16px;
+            color: #374151 !important;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+        .order-number-box {
+            background-color: #f9fafb !important;
+            border: 2px solid #e5e7eb !important;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .order-number-label {
+            font-size: 14px;
+            color: #4b5563 !important;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .order-number {
+            font-size: 24px;
+            color: #591F82 !important;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 20px;
+            color: #111827 !important;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb !important;
+        }
+        .product-card {
+            background-color: #f9fafb !important;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .product-type {
+            display: inline-block;
+            background-color: #591F82;
+            color: #ffffff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .product-name {
+            font-size: 22px;
+            color: #111827 !important;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .product-description {
+            font-size: 14px;
+            color: #4b5563 !important;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .price-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 2px solid #d1d5db;
+        }
+        .price-label {
+            font-size: 16px;
+            color: #111827 !important;
+            font-weight: 600;
+        }
+        .price-amount {
+            font-size: 22px;
+            color: #591F82 !important;
+            font-weight: 700;
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            background-color: #f9fafb !important;
+            border-radius: 8px;
+        }
+        .detail-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            color: #591F82;
+            font-size: 20px;
+        }
+        .detail-content {
+            flex: 1;
+        }
+        .detail-label {
+            font-size: 12px;
+            color: #4b5563 !important;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        .detail-value {
+            font-size: 16px;
+            color: #111827 !important;
+            font-weight: 600;
+        }
+        .info-box {
+            background-color: #eff6ff !important;
+            border: 1px solid #bfdbfe !important;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .info-box-title {
+            font-size: 18px;
+            color: #111827 !important;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .info-box-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .info-box-list li {
+            font-size: 14px;
+            color: #374151 !important;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .info-box-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #2563eb !important;
+            font-weight: bold;
+        }
+        .footer {
+            background-color: #f9fafb;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+        }
+        .footer-text {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+        .footer-links {
+            margin-top: 20px;
+        }
+        .footer-links a {
+            color: #591F82;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        @media only screen and (max-width: 600px) {
+            .content {
+                padding: 30px 20px;
+            }
+            .header {
+                padding: 30px 15px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+        /* Dark Mode Compatibility - Ensure colors work well even if client applies dark mode */
+        /* Using higher contrast colors and explicit color declarations to prevent unwanted inversions */
+    </style>
+</head>
+    <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f5 !important; line-height: 1.6;">
+    <div class="email-container" style="max-width: 600px; margin: 0 auto; background-color: #ffffff !important;">
+        <!-- Header -->
+        <div class="header" style="background: linear-gradient(135deg, #591F82 0%, #7B2FA8 100%); padding: 40px 20px; text-align: center;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700;">bauScape</h1>
+        </div>
+
+        <!-- Content -->
+        <div class="content" style="padding: 40px 30px; background-color: #ffffff !important;">
+            <!-- Success Icon -->
+            <div class="success-icon" style="text-align: center; margin-bottom: 30px;">
+                <div class="success-icon-circle" style="display: inline-block; width: 80px; height: 80px; background-color: #dcfce7 !important; border-radius: 50%; text-align: center; line-height: 80px; margin: 0 auto; vertical-align: middle;">
+                    <span class="success-icon-text" style="font-size: 48px; color: #16a34a !important; display: inline-block; vertical-align: middle; line-height: 1;">✓</span>
+                </div>
+            </div>
+
+            <!-- Greeting -->
+            <div class="greeting" style="font-size: 18px; color: #111827 !important; margin-bottom: 20px; font-weight: 600;">
+                Ciao {{ params.CUSTOMER_NAME }}{{ params.CUSTOMER_SURNAME }},
+            </div>
+
+            <!-- Confirmation Text -->
+            <div class="confirmation-text" style="font-size: 16px; color: #374151 !important; margin-bottom: 40px; line-height: 1.8;">
+                La tua prenotazione è stata confermata con successo! Siamo entusiasti di averti con noi per questa esperienza indimenticabile con il tuo amico a quattro zampe.
+            </div>
+
+            <!-- Order Number -->
+            <div class="order-number-box" style="background-color: #f9fafb !important; border: 2px solid #e5e7eb !important; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 30px;">
+                <div class="order-number-label" style="font-size: 14px; color: #4b5563 !important; margin-bottom: 8px; font-weight: 500;">Numero Ordine</div>
+                <div class="order-number" style="font-size: 24px; color: #591F82 !important; font-weight: 700; letter-spacing: 2px;">#{{ params.ORDER_NUMBER }}</div>
+            </div>
+
+            <!-- Product Details Section -->
+            <div class="section" style="margin-bottom: 30px;">
+                <div class="section-title" style="font-size: 20px; color: #111827 !important; font-weight: 700; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb !important;">Dettagli Prodotto</div>
+                <div class="product-card" style="background-color: #f9fafb !important; border: 1px solid #e5e7eb !important; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                    <div class="product-type" style="display: inline-block; background-color: #591F82 !important; color: #ffffff !important; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 12px;">{{ params.PRODUCT_TYPE }}</div>
+                    <div class="product-name" style="font-size: 22px; color: #111827 !important; font-weight: 700; margin-bottom: 10px;">{{ params.PRODUCT_NAME }}</div>
+                    <div class="product-description" style="display: {{ params.PRODUCT_DESCRIPTION_DISPLAY }}; font-size: 14px; color: #4b5563 !important; line-height: 1.6; margin-bottom: 15px;">{{ params.PRODUCT_DESCRIPTION }}</div>
+                    <div class="price-box" style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 2px solid #d1d5db !important;">
+                        <div class="price-label" style="font-size: 16px; color: #111827 !important; font-weight: 600;">Totale Pagato</div>
+                        <div class="price-amount" style="font-size: 22px; color: #591F82 !important; font-weight: 700;">{{ params.TOTAL_AMOUNT }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Details Section -->
+            <div class="section" style="margin-bottom: 30px;">
+                <div class="section-title" style="font-size: 20px; color: #111827 !important; font-weight: 700; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb !important;">Dettagli Prenotazione</div>
+                <div class="details-grid" style="display: grid; grid-template-columns: 1fr; gap: 15px;">
+                    <div class="detail-item" style="display: flex; align-items: flex-start; padding: 15px; background-color: #f9fafb !important; border-radius: 8px;">
+                        <div class="detail-icon" style="width: 24px; height: 24px; margin-right: 12px; flex-shrink: 0; color: #591F82 !important; font-size: 20px;">📅</div>
+                        <div class="detail-content" style="flex: 1;">
+                            <div class="detail-label" style="font-size: 12px; color: #4b5563 !important; margin-bottom: 4px; font-weight: 500;">Data</div>
+                            <div class="detail-value" style="font-size: 16px; color: #111827 !important; font-weight: 600;">{{ params.BOOKING_DATE }}</div>
+                        </div>
+                    </div>
+                    <div class="detail-item" style="display: {{ params.BOOKING_TIME_DISPLAY }}; align-items: flex-start; padding: 15px; background-color: #f9fafb !important; border-radius: 8px;">
+                        <div class="detail-icon" style="width: 24px; height: 24px; margin-right: 12px; flex-shrink: 0; color: #591F82 !important; font-size: 20px;">🕐</div>
+                        <div class="detail-content" style="flex: 1;">
+                            <div class="detail-label" style="font-size: 12px; color: #4b5563 !important; margin-bottom: 4px; font-weight: 500;">Orario</div>
+                            <div class="detail-value" style="font-size: 16px; color: #111827 !important; font-weight: 600;">{{ params.BOOKING_TIME }}</div>
+                        </div>
+                    </div>
+                    <div class="detail-item" style="display: {{ params.NUMBER_OF_ADULTS_DISPLAY }}; align-items: flex-start; padding: 15px; background-color: #f9fafb !important; border-radius: 8px;">
+                        <div class="detail-icon" style="width: 24px; height: 24px; margin-right: 12px; flex-shrink: 0; color: #591F82 !important; font-size: 20px;">👥</div>
+                        <div class="detail-content" style="flex: 1;">
+                            <div class="detail-label" style="font-size: 12px; color: #4b5563 !important; margin-bottom: 4px; font-weight: 500;">Partecipanti</div>
+                            <div class="detail-value" style="font-size: 16px; color: #111827 !important; font-weight: 600;">{{ params.NUMBER_OF_ADULTS }}</div>
+                        </div>
+                    </div>
+                    <div class="detail-item" style="display: {{ params.NUMBER_OF_DOGS_DISPLAY }}; align-items: flex-start; padding: 15px; background-color: #f9fafb !important; border-radius: 8px;">
+                        <div class="detail-icon" style="width: 24px; height: 24px; margin-right: 12px; flex-shrink: 0; color: #591F82 !important; font-size: 20px;">🐕</div>
+                        <div class="detail-content" style="flex: 1;">
+                            <div class="detail-label" style="font-size: 12px; color: #4b5563 !important; margin-bottom: 4px; font-weight: 500;">Cani</div>
+                            <div class="detail-value" style="font-size: 16px; color: #111827 !important; font-weight: 600;">{{ params.NUMBER_OF_DOGS }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box" style="background-color: #eff6ff !important; border: 1px solid #bfdbfe !important; border-radius: 12px; padding: 20px; margin-top: 30px;">
+                <div class="info-box-title" style="font-size: 18px; color: #111827 !important; font-weight: 600; margin-bottom: 15px;">Cosa succede ora?</div>
+                <ul class="info-box-list" style="list-style: none; padding: 0; margin: 0;">
+                    <li style="font-size: 14px; color: #374151 !important; margin-bottom: 10px; padding-left: 20px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #2563eb !important; font-weight: bold;">•</span>
+                        Riceverai ulteriori dettagli via email prima della data della prenotazione
+                    </li>
+                    <li style="font-size: 14px; color: #374151 !important; margin-bottom: 10px; padding-left: 20px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #2563eb !important; font-weight: bold;">•</span>
+                        Se hai domande o necessiti di modifiche, contattaci tramite email o telefono
+                    </li>
+                    <li style="font-size: 14px; color: #374151 !important; margin-bottom: 10px; padding-left: 20px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #2563eb !important; font-weight: bold;">•</span>
+                        Conserva questa email come conferma della tua prenotazione
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer" style="background-color: #f9fafb !important; padding: 30px; text-align: center; border-top: 1px solid #e5e7eb !important;">
+            <div class="footer-text" style="font-size: 14px; color: #4b5563 !important; margin-bottom: 10px;">
+                <strong>bauScape</strong><br>
+                Viaggi ed esperienze indimenticabili con il tuo cane
+            </div>
+            <div class="footer-text" style="margin-top: 15px; font-size: 12px; color: #4b5563 !important;">
+                ID Prenotazione: {{ params.BOOKING_ID }}<br>
+                Se hai domande, rispondi a questa email o contattaci a info@bauscape.com
+            </div>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="#" style="color: #591F82 !important; text-decoration: none; margin: 0 10px; font-size: 14px;">Sito Web</a> | 
+                <a href="#" style="color: #591F82 !important; text-decoration: none; margin: 0 10px; font-size: 14px;">Privacy Policy</a> | 
+                <a href="#" style="color: #591F82 !important; text-decoration: none; margin: 0 10px; font-size: 14px;">Termini di Servizio</a>
+            </div>
+            <div class="footer-text" style="margin-top: 20px; font-size: 12px; color: #9ca3af !important;">
+                © 2025 bauScape. Tutti i diritti riservati.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

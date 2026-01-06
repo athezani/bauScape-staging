@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conferma Prenotazione - FlixDog</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        .header {
+            background: linear-gradient(135deg, #1A0841 0%, #2C0E6E 100%);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .success-icon {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .success-icon-circle {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background-color: #dcfce7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        .success-icon-text {
+            font-size: 48px;
+            color: #16a34a;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #111827;
+            margin-bottom: 20px;
+        }
+        .confirmation-text {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+        .order-number-box {
+            background-color: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .order-number-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .order-number {
+            font-size: 24px;
+            color: #1A0841;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 20px;
+            color: #111827;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .product-card {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .product-type {
+            display: inline-block;
+            background-color: #FF9427;
+            color: #1A0841;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .product-name {
+            font-size: 22px;
+            color: #111827;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .product-description {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .price-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 2px solid #d1d5db;
+        }
+        .price-label {
+            font-size: 16px;
+            color: #111827;
+            font-weight: 600;
+        }
+        .price-amount {
+            font-size: 28px;
+            color: #1A0841;
+            font-weight: 700;
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+        }
+        .detail-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            color: #1A0841;
+        }
+        .detail-content {
+            flex: 1;
+        }
+        .detail-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        .detail-value {
+            font-size: 16px;
+            color: #111827;
+            font-weight: 600;
+        }
+        .info-box {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .info-box-title {
+            font-size: 18px;
+            color: #111827;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .info-box-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .info-box-list li {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .info-box-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #2563eb;
+            font-weight: bold;
+        }
+        .footer {
+            background-color: #f9fafb;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+        }
+        .footer-text {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+        .footer-links {
+            margin-top: 20px;
+        }
+        .footer-links a {
+            color: #1A0841;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        @media only screen and (max-width: 600px) {
+            .content {
+                padding: 30px 20px;
+            }
+            .header {
+                padding: 30px 15px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>FlixDog</h1>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Success Icon -->
+            <div class="success-icon">
+                <div class="success-icon-circle">
+                    <span class="success-icon-text">✓</span>
+                </div>
+            </div>
+
+            <!-- Greeting -->
+            <div class="greeting">
+                Ciao {{ params.CUSTOMER_NAME }}{{#if params.CUSTOMER_SURNAME}} {{ params.CUSTOMER_SURNAME }}{{/if}},
+            </div>
+
+            <!-- Confirmation Text -->
+            <div class="confirmation-text">
+                La tua prenotazione è stata confermata con successo! Siamo entusiasti di averti con noi per questa esperienza indimenticabile con il tuo amico a quattro zampe.
+            </div>
+
+            <!-- Order Number -->
+            <div class="order-number-box">
+                <div class="order-number-label">Numero Ordine</div>
+                <div class="order-number">#{{ params.ORDER_NUMBER }}</div>
+            </div>
+
+            <!-- Product Details Section -->
+            <div class="section">
+                <div class="section-title">Dettagli Prodotto</div>
+                <div class="product-card">
+                    <div class="product-type">{{ params.PRODUCT_TYPE }}</div>
+                    <div class="product-name">{{ params.PRODUCT_NAME }}</div>
+                    {{#if params.PRODUCT_DESCRIPTION}}
+                    <div class="product-description">{{ params.PRODUCT_DESCRIPTION }}</div>
+                    {{/if}}
+                    <div class="price-box">
+                        <div class="price-label">Totale Pagato</div>
+                        <div class="price-amount">{{ params.TOTAL_AMOUNT }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Details Section -->
+            <div class="section">
+                <div class="section-title">Dettagli Prenotazione</div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-icon">📅</div>
+                        <div class="detail-content">
+                            <div class="detail-label">Data</div>
+                            <div class="detail-value">{{ params.BOOKING_DATE }}</div>
+                        </div>
+                    </div>
+                    {{#if params.BOOKING_TIME}}
+                    <div class="detail-item">
+                        <div class="detail-icon">🕐</div>
+                        <div class="detail-content">
+                            <div class="detail-label">Orario</div>
+                            <div class="detail-value">{{ params.BOOKING_TIME }}</div>
+                        </div>
+                    </div>
+                    {{/if}}
+                    <div class="detail-item">
+                        <div class="detail-icon">👥</div>
+                        <div class="detail-content">
+                            <div class="detail-label">Partecipanti</div>
+                            <div class="detail-value">{{ params.NUMBER_OF_ADULTS }} {{#ifCond params.NUMBER_OF_ADULTS '==' '1'}}persona{{else}}persone{{/ifCond}}</div>
+                        </div>
+                    </div>
+                    {{#ifCond params.NUMBER_OF_DOGS '!=' '0'}}
+                    <div class="detail-item">
+                        <div class="detail-icon">🐕</div>
+                        <div class="detail-content">
+                            <div class="detail-label">Cani</div>
+                            <div class="detail-value">{{ params.NUMBER_OF_DOGS }} {{#ifCond params.NUMBER_OF_DOGS '==' '1'}}cane{{else}}cani{{/ifCond}}</div>
+                        </div>
+                    </div>
+                    {{/ifCond}}
+                </div>
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box">
+                <div class="info-box-title">Cosa succede ora?</div>
+                <ul class="info-box-list">
+                    <li>Riceverai ulteriori dettagli via email prima della data della prenotazione</li>
+                    <li>Se hai domande o necessiti di modifiche, contattaci tramite email o telefono</li>
+                    <li>Conserva questa email come conferma della tua prenotazione</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-text">
+                <strong>FlixDog</strong><br>
+                Viaggi ed esperienze indimenticabili con il tuo cane
+            </div>
+            <div class="footer-text" style="margin-top: 15px; font-size: 12px;">
+                ID Prenotazione: {{ params.BOOKING_ID }}<br>
+                Se hai domande, rispondi a questa email o contattaci a info@flixdog.com
+            </div>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="#">Sito Web</a> | 
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Termini di Servizio</a>
+            </div>
+            <div class="footer-text" style="margin-top: 20px; font-size: 12px; color: #9ca3af;">
+                © 2025 FlixDog. Tutti i diritti riservati.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

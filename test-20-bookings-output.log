@@ -1,0 +1,261 @@
+[dotenv@17.2.3] injecting env (5) from .test.env.local -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+🚀 Starting 20 Multi-Country End-to-End Bookings
+================================================
+
+This test will:
+1. Create 20 checkout sessions with different countries
+2. Complete payments for all of them
+3. Verify metadata is correctly set
+4. Trigger webhooks to sync with Odoo
+5. Check that all data reaches Odoo correctly
+
+================================================
+
+
+📝 Booking #1: Mario Rossi (IT)
+   ✅ Session created: cs_test_b14OFZ0QEGzpVAz8uksc55tOSBaYyiO3MRAZry93FLobCVlaCqHrb3Ralh
+   📋 Metadata verified:
+      Country: IT
+      Fiscal Code: RSSMRA80A01H501U
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #2: Luigi Bianchi (IT)
+   ✅ Session created: cs_test_b1kDUXsvMIUQtQKU0u9daOcDOdpKb2chuxxMpk8On1bYHjmuGiLCY6q9tW
+   📋 Metadata verified:
+      Country: IT
+      Fiscal Code: BNCLGU85B02H501V
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #3: Giuseppe Verdi (IT)
+   ✅ Session created: cs_test_b1mSYhDC40CjnNTRfnX7utCSuv8kCIHYtfZ5TUuleiXHk0Af8yTfJyjzql
+   📋 Metadata verified:
+      Country: IT
+      Fiscal Code: VRDGPP90C03H501W
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #4: Giovanni Neri (IT - B2B)
+   ✅ Session created: cs_test_b1EKnoaPhFhqDqA0cGOFbkfmgVPJGOB8J00rl5eBYsDHlULsf1SsBDEguG
+   📋 Metadata verified:
+      Country: IT
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #5: Anna Russo (IT)
+   ✅ Session created: cs_test_b1JIShCKmxoGtdp0mADCWcCdPFBBQShVr8VxtVOu6FNkcgQ1JCAfzriDff
+   📋 Metadata verified:
+      Country: IT
+      Fiscal Code: RSSANN95D04H501X
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #6: Hans Müller (CH)
+   ✅ Session created: cs_test_b1BmgOhBFfBwRUlF2KOAvxay3kzZ0K5MjtjecL044mAaYlBaAtdRP35rTd
+   📋 Metadata verified:
+      Country: CH
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #7: Peter Schmidt (CH)
+   ✅ Session created: cs_test_b1KXP0dsfJYklHWCYVDqAjBuBKYyj6R6x67V2aPlWBG8rL9TSFyeJEaT5z
+   📋 Metadata verified:
+      Country: CH
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #8: Ursula Weber (CH)
+   ✅ Session created: cs_test_b17pK5XjaJoGlC9nOz95xKH6qhhCutDQauGrPRNzEfjaWs5hJpEZj6BEsw
+   📋 Metadata verified:
+      Country: CH
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #9: Jean Dupont (FR)
+   ✅ Session created: cs_test_b15PyAHPM3jktNRts3CKq8OovX0akQqLAMUZwzdb7EAKQciqtD9MwtvCBd
+   📋 Metadata verified:
+      Country: FR
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #10: Marie Martin (FR)
+   ✅ Session created: cs_test_b1aPJgVs1lr6daGUz4zsVnZrNyNVW5CX3Dvzu788OlNxTUrDLW5mRPqLI8
+   📋 Metadata verified:
+      Country: FR
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #11: Pierre Bernard (FR)
+   ✅ Session created: cs_test_b1QEq8XvbbFzOprBxQxXYTvQ1hSR9GnfVbMp5LYyCwpOlfmlemsI8ur38E
+   📋 Metadata verified:
+      Country: FR
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #12: Klaus Fischer (DE)
+   ✅ Session created: cs_test_b1CnDDGGdoyJSm32ucPS0mhsGuUM76j0m7vVBfMdVu2zb8nnTBjKuXZrpF
+   📋 Metadata verified:
+      Country: DE
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #13: Helga Wagner (DE)
+   ✅ Session created: cs_test_b1yJ91cHYEfeyqch4C7VTVVZxPNP0vPriePwwJon1FwyD6kPy030w8V1HM
+   📋 Metadata verified:
+      Country: DE
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #14: Wolfgang Becker (DE)
+   ✅ Session created: cs_test_b1JBMOVCXTpdnNOmlZLgKXzN9WLSGQGhrcgbngiHHwWVKt0LBMQcFe05y6
+   📋 Metadata verified:
+      Country: DE
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #15: Carlos García (ES)
+   ✅ Session created: cs_test_b1TXsc22YF8DfJCJD3C4jjbVb0eP70Lr3QUqjA2JMvIkvE5aumTgsoPQ6T
+   📋 Metadata verified:
+      Country: ES
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #16: María Rodríguez (ES)
+   ✅ Session created: cs_test_b16XwVvod8hEWu76OA80vTNbP4A02Ie4TnFctNebhUdgMDIi9ZB7MoGjb6
+   📋 Metadata verified:
+      Country: ES
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #17: Antonio López (ES)
+   ✅ Session created: cs_test_b1rzAyYJJcwiJua70kcDZTBKtDJM8TEU8JwE9P8wIt5RzrPAhVwwLJ094g
+   📋 Metadata verified:
+      Country: ES
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #18: Jan Kowalski (PL)
+   ✅ Session created: cs_test_b1eHGx0IkDSob9KwtKwi1smAjL0Qgs9Di8l1vhfK1mXPcj132DpvgYitnh
+   📋 Metadata verified:
+      Country: PL
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #19: Anna Nowak (PL)
+   ✅ Session created: cs_test_b1wdiBwRV7YEe6k1AKUJMMZm6cbuzdIVdB3zwPbgBhaEQ2xUCVH8fwAwiG
+   📋 Metadata verified:
+      Country: PL
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+   ⏳ Pausing 2s before next booking...
+
+📝 Booking #20: Piotr Wiśniewski (PL)
+   ✅ Session created: cs_test_b1NktkAFWhs4OC5TugcPGCxASpH4oqCFNieB1jAuhYMXfkyK9BJ6EmMDzb
+   📋 Metadata verified:
+      Country: PL
+      Fiscal Code: null
+      B2B: false
+   ❌ No payment intent found
+
+================================================
+📊 Final Results
+================================================
+Total bookings: 20
+✅ Successful: 0
+❌ Failed: 20
+
+🔍 Payment Intent IDs for Odoo verification:
+
+❌ Errors:
+   1. Booking #1 (Mario Rossi): No payment intent found
+   2. Booking #2 (Luigi Bianchi): No payment intent found
+   3. Booking #3 (Giuseppe Verdi): No payment intent found
+   4. Booking #4 (Giovanni Neri): No payment intent found
+   5. Booking #5 (Anna Russo): No payment intent found
+   6. Booking #6 (Hans Müller): No payment intent found
+   7. Booking #7 (Peter Schmidt): No payment intent found
+   8. Booking #8 (Ursula Weber): No payment intent found
+   9. Booking #9 (Jean Dupont): No payment intent found
+   10. Booking #10 (Marie Martin): No payment intent found
+   11. Booking #11 (Pierre Bernard): No payment intent found
+   12. Booking #12 (Klaus Fischer): No payment intent found
+   13. Booking #13 (Helga Wagner): No payment intent found
+   14. Booking #14 (Wolfgang Becker): No payment intent found
+   15. Booking #15 (Carlos García): No payment intent found
+   16. Booking #16 (María Rodríguez): No payment intent found
+   17. Booking #17 (Antonio López): No payment intent found
+   18. Booking #18 (Jan Kowalski): No payment intent found
+   19. Booking #19 (Anna Nowak): No payment intent found
+   20. Booking #20 (Piotr Wiśniewski): No payment intent found
+
+================================================
+📝 Next Steps:
+================================================
+1. Check Stripe Dashboard for these Payment Intents
+2. Verify webhooks were triggered successfully
+3. Check Odoo for Sale Orders with these Payment Intent IDs
+4. Verify that country_id is correctly set for each order:
+   - IT customers should have country_id = Italy
+   - CH customers should have country_id = Switzerland
+   - FR customers should have country_id = France
+   - DE customers should have country_id = Germany
+   - ES customers should have country_id = Spain
+   - PL customers should have country_id = Poland
+5. Verify fiscal codes are ONLY present for Italian B2C customers
+6. Verify B2B customers remain unchanged with IT country
+
+================================================
+⚠️  Some bookings failed. Please review the errors above.

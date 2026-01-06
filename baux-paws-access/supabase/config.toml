@@ -1,0 +1,25 @@
+project_id = "zyonwzilijgnnnmhxvbo"
+
+[functions.auto-complete-bookings]
+verify_jwt = false
+
+[functions.create-checkout-session]
+verify_jwt = false
+
+[functions.stripe-webhook]
+verify_jwt = false
+
+[functions.get-checkout-session]
+verify_jwt = false
+
+[functions.send-transactional-email]
+verify_jwt = false
+
+[functions.ensure-booking]
+verify_jwt = false
+
+[functions.create-booking]
+verify_jwt = false
+
+[functions.send-contact-email]
+verify_jwt = false
