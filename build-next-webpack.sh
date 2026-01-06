@@ -9,25 +9,15 @@ unset NEXT_TURBOPACK
 unset NEXT_TURBOPACK_EXPERIMENTAL
 unset NEXT_TURBOPACK_USE_WORKER
 
-# Salva la directory root
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# Installa react e react-dom nella root node_modules per risolvere il problema workspace
-# Next.js (nella root) cerca react relativo a dove si trova next (nella root)
-echo "Installing react and react-dom in root for Next.js workspace compatibility..."
-cd "$ROOT_DIR"
-npm install react@^19.2.3 react-dom@^19.2.3 --legacy-peer-deps --no-save
+# A questo punto Vercel ha già eseguito `npm install` nella root:
+# - next, react, react-dom sono installati in $ROOT_DIR/node_modules
+# - le dipendenze dei workspace sono risolte via npm workspaces/hoisting
+# Evitiamo di reinstallare dentro ecommerce-homepage per non corrompere la cache di Vercel.
 
-# Naviga nella directory ecommerce-homepage
 cd "$ROOT_DIR/ecommerce-homepage"
 
-# Assicurati che le dipendenze siano installate in ecommerce-homepage
-# Include anche devDependencies perché Next.js ha bisogno di @types/* durante il build
-echo "Installing dependencies (including devDependencies) in ecommerce-homepage..."
-NODE_ENV=development npm install --legacy-peer-deps
-
-# Esegui next build con --webpack esplicitamente
-# NODE_PATH include sia root che ecommerce-homepage node_modules per risolvere react
-echo "Building Next.js with webpack..."
+echo "Building Next.js with webpack using existing root node_modules..."
 NODE_PATH="$ROOT_DIR/node_modules:$ROOT_DIR/ecommerce-homepage/node_modules:$NODE_PATH" npx --yes next build --webpack
 
