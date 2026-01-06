@@ -84,8 +84,12 @@ NODE_PATH="$ROOT_DIR/node_modules:$ROOT_DIR/ecommerce-homepage/node_modules:$NOD
 
 # IMPORTANTE: Copia lo stub anche dopo il build per assicurarsi che sia nel bundle finale
 # Vercel potrebbe pulire node_modules dopo il build, quindi dobbiamo ricreare lo stub
-echo "Ensuring source-map stub is available after build..."
+echo "=========================================="
+echo "🔍 POST-BUILD: Verificando source-map stub"
+echo "=========================================="
+
 if [ -f "scripts/source-map-stub/next-compiled-source-map/index.js" ]; then
+  echo "📦 Stub source trovato, copiando..."
   mkdir -p "node_modules/next/dist/compiled/source-map"
   cp "scripts/source-map-stub/next-compiled-source-map/index.js" "node_modules/next/dist/compiled/source-map/index.js"
   cp "scripts/source-map-stub/next-compiled-source-map/package.json" "node_modules/next/dist/compiled/source-map/package.json"
@@ -93,19 +97,62 @@ if [ -f "scripts/source-map-stub/next-compiled-source-map/index.js" ]; then
   
   # Copia anche nel .next output se esiste (sia server che standalone)
   if [ -d ".next" ]; then
+    echo "📁 .next directory trovata, copiando stub..."
+    
     # Per build normale
-    mkdir -p ".next/server/node_modules/next/dist/compiled/source-map" 2>/dev/null || true
-    cp "scripts/source-map-stub/next-compiled-source-map/index.js" ".next/server/node_modules/next/dist/compiled/source-map/index.js" 2>/dev/null || true
-    cp "scripts/source-map-stub/next-compiled-source-map/package.json" ".next/server/node_modules/next/dist/compiled/source-map/package.json" 2>/dev/null || true
-    echo "✅ Source-map stub copied to .next/server output"
+    if [ -d ".next/server" ]; then
+      mkdir -p ".next/server/node_modules/next/dist/compiled/source-map" 2>/dev/null || true
+      cp "scripts/source-map-stub/next-compiled-source-map/index.js" ".next/server/node_modules/next/dist/compiled/source-map/index.js" 2>/dev/null || true
+      cp "scripts/source-map-stub/next-compiled-source-map/package.json" ".next/server/node_modules/next/dist/compiled/source-map/package.json" 2>/dev/null || true
+      if [ -f ".next/server/node_modules/next/dist/compiled/source-map/index.js" ]; then
+        echo "✅ Source-map stub copied to .next/server output"
+      else
+        echo "❌ ERRORE: Source-map stub NON copiato in .next/server"
+      fi
+    else
+      echo "⚠️  .next/server non trovato (normale per standalone)"
+    fi
     
     # Per build standalone (output: 'standalone' in next.config.js)
     if [ -d ".next/standalone" ]; then
+      echo "📦 Build standalone trovata, copiando stub..."
       mkdir -p ".next/standalone/node_modules/next/dist/compiled/source-map" 2>/dev/null || true
       cp "scripts/source-map-stub/next-compiled-source-map/index.js" ".next/standalone/node_modules/next/dist/compiled/source-map/index.js" 2>/dev/null || true
       cp "scripts/source-map-stub/next-compiled-source-map/package.json" ".next/standalone/node_modules/next/dist/compiled/source-map/package.json" 2>/dev/null || true
-      echo "✅ Source-map stub copied to .next/standalone output"
+      
+      # Verifica che sia stato copiato
+      if [ -f ".next/standalone/node_modules/next/dist/compiled/source-map/index.js" ]; then
+        echo "✅ Source-map stub copied to .next/standalone output"
+        echo "📄 Verifica contenuto stub:"
+        head -5 ".next/standalone/node_modules/next/dist/compiled/source-map/index.js" || true
+      else
+        echo "❌ ERRORE CRITICO: Source-map stub NON copiato in .next/standalone"
+        echo "🔍 Verificando directory:"
+        ls -la ".next/standalone/node_modules/next/dist/compiled/" 2>&1 || echo "Directory non esiste"
+      fi
+      
+      # Verifica anche che source-map completo sia presente
+      if [ -d ".next/standalone/node_modules/source-map" ]; then
+        echo "✅ source-map completo presente in standalone"
+      else
+        echo "⚠️  source-map completo NON presente in standalone"
+      fi
+    else
+      echo "⚠️  .next/standalone non trovato (build potrebbe non essere standalone)"
     fi
+  else
+    echo "❌ ERRORE: .next directory non trovata dopo build"
+  fi
+else
+  echo "❌ ERRORE CRITICO: Stub source-map non trovato in scripts/source-map-stub/"
+  echo "🔍 Cercando alternative..."
+  if [ -f "scripts/create-source-map-stub.js" ]; then
+    echo "📝 Trovato create-source-map-stub.js, eseguendo..."
+    node scripts/create-source-map-stub.js
   fi
 fi
+
+echo "=========================================="
+echo "✅ POST-BUILD verifiche completate"
+echo "=========================================="
 

@@ -1,0 +1,96 @@
+Installing all dependencies (including Next.js and devDependencies) in ecommerce-homepage workspace...
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'bin-links@6.0.0',
+npm warn EBADENGINE   required: { node: '^20.17.0 || >=22.9.0' },
+npm warn EBADENGINE   current: { node: 'v20.15.0', npm: '10.7.0' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'cmd-shim@8.0.0',
+npm warn EBADENGINE   required: { node: '^20.17.0 || >=22.9.0' },
+npm warn EBADENGINE   current: { node: 'v20.15.0', npm: '10.7.0' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'npm-normalize-package-bin@5.0.0',
+npm warn EBADENGINE   required: { node: '^20.17.0 || >=22.9.0' },
+npm warn EBADENGINE   current: { node: 'v20.15.0', npm: '10.7.0' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'proc-log@6.1.0',
+npm warn EBADENGINE   required: { node: '^20.17.0 || >=22.9.0' },
+npm warn EBADENGINE   current: { node: 'v20.15.0', npm: '10.7.0' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'read-cmd-shim@6.0.0',
+npm warn EBADENGINE   required: { node: '^20.17.0 || >=22.9.0' },
+npm warn EBADENGINE   current: { node: 'v20.15.0', npm: '10.7.0' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'write-file-atomic@7.0.0',
+npm warn EBADENGINE   required: { node: '^20.17.0 || >=22.9.0' },
+npm warn EBADENGINE   current: { node: 'v20.15.0', npm: '10.7.0' }
+npm warn EBADENGINE }
+
+removed 1 package, and audited 876 packages in 2s
+
+132 packages are looking for funding
+  run `npm fund` for details
+
+6 vulnerabilities (3 moderate, 3 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Creating source-map stub for Next.js...
+Copying committed source-map stub...
+✅ Source-map stub copied successfully
+✅ Verified: source-map stub exists at node_modules/next/dist/compiled/source-map/index.js
+✅ Verified: source-map stub content is valid
+Building Next.js with webpack using workspace node_modules...
+▲ Next.js 16.1.1 (webpack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✅ Webpack alias: next/dist/compiled/source-map -> /Users/adezzani/bauScape/ecommerce-homepage/node_modules/source-map/source-map.js
+✅ Webpack alias: next/dist/compiled/source-map -> /Users/adezzani/bauScape/ecommerce-homepage/node_modules/source-map/source-map.js
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+⚠ Minimum recommended TypeScript version is v5.1.0, older versions can potentially be incompatible with Next.js. Detected: 4.9.5
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/13) ...
+  Generating static pages using 9 workers (3/13) 
+  Generating static pages using 9 workers (6/13) 
+  Generating static pages using 9 workers (9/13) 
+✓ Generating static pages using 9 workers (13/13) in 1057.1ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)                   Revalidate  Expire
+┌ ○ /                                 1m      1y
+├ ○ /_not-found
+├ ƒ /api/stripe-webhook-odoo
+├ ○ /cancellation-request
+├ ƒ /checkout
+├ ○ /classi                           1m      1y
+├ ○ /contatti
+├ ○ /cookie-policy
+├ ○ /esperienze                       1m      1y
+├ ○ /icon.png
+├ ƒ /prodotto/[type]/[id]
+├ ○ /regolamento-a-6-zampe
+├ ○ /robots.txt
+├ ○ /sitemap.xml
+├ ƒ /thank-you
+└ ○ /viaggi                           1m      1y
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+Ensuring source-map stub is available after build...
+✅ Source-map stub recreated after build
+✅ Source-map stub copied to .next/server output
+✅ Source-map stub copied to .next/standalone output
