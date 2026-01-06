@@ -41,22 +41,29 @@ if [ ! -d "node_modules/next" ]; then
   NODE_ENV=development npm install --legacy-peer-deps
 fi
 
-# Verifica che @types/react sia presente (ora è in dependencies, quindi dovrebbe essere già installato)
+# Verifica che @types/react sia presente (può essere nella root o nella subdirectory)
 echo "Checking for @types/react..."
-if [ ! -d "node_modules/@types/react" ]; then
-  echo "ERROR: @types/react not found! It should be in dependencies now."
+
+# Controlla prima nella directory corrente (ecommerce-homepage)
+if [ -d "node_modules/@types/react" ]; then
+  TYPES_REACT_DIR="node_modules/@types/react"
+  echo "✅ @types/react found in ecommerce-homepage/node_modules"
+elif [ -d "../node_modules/@types/react" ]; then
+  TYPES_REACT_DIR="../node_modules/@types/react"
+  echo "✅ @types/react found in root node_modules"
+else
+  echo "ERROR: @types/react not found in either location!"
   echo "This indicates a problem with npm ci installation."
   exit 1
 fi
-echo "✅ @types/react found in node_modules"
 
 # Verifica che il package sia accessibile a TypeScript
 echo "Verifying @types/react accessibility..."
-if [ ! -f "node_modules/@types/react/index.d.ts" ]; then
+if [ ! -f "$TYPES_REACT_DIR/index.d.ts" ]; then
   echo "ERROR: @types/react/index.d.ts not found! Installation corrupted."
   exit 1
 fi
-echo "✅ @types/react/index.d.ts exists"
+echo "✅ @types/react/index.d.ts exists and is accessible"
 
 # Crea lo stub di source-map nella posizione che Next.js si aspetta
 # IMPORTANTE: Questo deve essere fatto PRIMA del build per assicurarsi che lo stub sia disponibile
