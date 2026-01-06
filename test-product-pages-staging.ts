@@ -40,7 +40,30 @@ async function testProductPage(productType: 'experience' | 'class' | 'trip', pro
     
     if (!success) {
       const text = await response.text();
-      const error = text.substring(0, 500); // Limita la lunghezza dell'errore
+      // Estrai il messaggio di errore dalla pagina HTML di Next.js
+      let error = text.substring(0, 1000); // Limita la lunghezza dell'errore
+      
+      // Cerca il messaggio di errore nel body
+      const errorMatch = text.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+      if (errorMatch) {
+        const bodyText = errorMatch[1];
+        // Cerca pattern comuni di errore
+        const errorPatterns = [
+          /Cannot find module[^<]*/i,
+          /Error:[^<]*/i,
+          /TypeError:[^<]*/i,
+          /ReferenceError:[^<]*/i,
+        ];
+        
+        for (const pattern of errorPatterns) {
+          const match = bodyText.match(pattern);
+          if (match) {
+            error = match[0].substring(0, 500);
+            break;
+          }
+        }
+      }
+      
       console.log(`   ❌ Status: ${status}`);
       console.log(`   Error: ${error}`);
       return {

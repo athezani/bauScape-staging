@@ -2,6 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   
+  // Usa output standalone per includere tutte le dipendenze nel bundle
+  // Questo risolve il problema con moduli mancanti su Vercel in monorepo
+  output: 'standalone',
+  
   // Imposta la root directory per il tracing dei file
   // Questo risolve il problema con npm workspaces dove Next.js cerca nella root invece che in ecommerce-homepage/
   outputFileTracingRoot: require('path').join(__dirname),
