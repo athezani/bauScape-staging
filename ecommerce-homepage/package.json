@@ -71,7 +71,7 @@
             "dev": "vite",
             "dev:next": "next dev",
             "build": "vite build",
-            "build:next": "next build",
+            "build:next": "next build --webpack",
             "start:next": "next start",
             "optimize-images": "node scripts/optimize-images.js",
             "test": "vitest run",

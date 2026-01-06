@@ -5,11 +5,6 @@ const nextConfig = {
   // Mantenere compatibilità con struttura esistente
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   
-  // Disabilita Turbopack esplicitamente - usa webpack per compatibilità con Stripe
-  experimental: {
-    turbo: false,
-  },
-  
   // Source maps solo in sviluppo, non in produzione per sicurezza
   productionBrowserSourceMaps: false,
   
