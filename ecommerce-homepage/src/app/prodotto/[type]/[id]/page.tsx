@@ -115,6 +115,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
     } catch (fetchErr) {
       console.error('[ProductPage] Exception during fetchProduct:', fetchErr);
       console.error('[ProductPage] Error stack:', fetchErr instanceof Error ? fetchErr.stack : 'No stack');
+      console.error('[ProductPage] Error message:', fetchErr instanceof Error ? fetchErr.message : String(fetchErr));
+      
+      // Check if it's an environment variable error
+      const errorMessage = fetchErr instanceof Error ? fetchErr.message : String(fetchErr);
+      if (errorMessage.includes('Supabase is not configured') || errorMessage.includes('NEXT_PUBLIC_SUPABASE')) {
+        console.error('[ProductPage] CRITICAL: Missing Supabase environment variables!');
+        console.error('[ProductPage] Available env keys:', Object.keys(process.env).filter(k => k.includes('SUPABASE') || k.includes('NEXT_PUBLIC')).join(', '));
+      }
+      
       throw fetchErr; // Re-throw to show 500 error
     }
     

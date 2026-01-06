@@ -9,10 +9,19 @@ unset NEXT_TURBOPACK
 unset NEXT_TURBOPACK_EXPERIMENTAL
 unset NEXT_TURBOPACK_USE_WORKER
 
-ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# Naviga nella app Next.js
-cd "$ROOT_DIR/ecommerce-homepage"
+# Se lo script è in ecommerce-homepage, siamo già nella directory corretta
+# Se lo script è nella root, dobbiamo entrare in ecommerce-homepage
+if [ "$(basename "$SCRIPT_DIR")" = "ecommerce-homepage" ]; then
+  # Siamo già in ecommerce-homepage
+  ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+  cd "$SCRIPT_DIR"
+else
+  # Siamo nella root, entriamo in ecommerce-homepage
+  ROOT_DIR="$SCRIPT_DIR"
+  cd "$ROOT_DIR/ecommerce-homepage"
+fi
 
 # IMPORTANTE: Installa TUTTE le dipendenze (incluso Next.js e devDependencies) nel workspace
 # Questo è necessario perché:
