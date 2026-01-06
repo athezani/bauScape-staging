@@ -8,8 +8,11 @@ const nextConfig = {
   
   // Include esplicitamente i file di Next.js nel bundle per evitare errori runtime su Vercel
   // Questo è necessario perché Vercel potrebbe non tracciare correttamente i file di Next.js in un monorepo
+  // I percorsi sono relativi a outputFileTracingRoot (che è __dirname, cioè ecommerce-homepage/)
   outputFileTracingIncludes: {
     '/': [
+      'node_modules/next/dist/compiled/source-map/**/*',
+      'node_modules/next/dist/compiled/source-map-js/**/*',
       'node_modules/next/dist/compiled/**/*',
       'node_modules/next/dist/server/**/*',
       'node_modules/next/dist/shared/**/*',

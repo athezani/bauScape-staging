@@ -47,6 +47,7 @@
             "react-router-dom": "^7.9.6",
             "recharts": "^2.15.2",
             "sonner": "^2.0.3",
+            "source-map": "^0.7.4",
             "stripe": "^17.0.0",
             "tailwind-merge": "*",
             "vaul": "^1.1.2",
