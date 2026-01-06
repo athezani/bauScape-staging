@@ -7,6 +7,8 @@ const nextConfig = {
   
   // Mantenere compatibilità con struttura esistente
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
+  turbopack: {},
+
   
   // src/pages-vite è già ignorato automaticamente perché non è nella struttura app/
   
