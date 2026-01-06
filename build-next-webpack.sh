@@ -37,6 +37,10 @@ if [ ! -d "node_modules/@types/react" ]; then
   npm install @types/react@19.2.7 @types/react-dom@^19.2.3 --legacy-peer-deps --save-dev
 fi
 
+# Crea lo stub di source-map nella posizione che Next.js si aspetta
+echo "Creating source-map stub for Next.js..."
+node scripts/create-source-map-stub.js || echo "WARNING: Failed to create source-map stub (script might not exist yet)"
+
 echo "Building Next.js with webpack using workspace node_modules..."
 NODE_PATH="$ROOT_DIR/node_modules:$ROOT_DIR/ecommerce-homepage/node_modules:$NODE_PATH" npx --yes next build --webpack
 
