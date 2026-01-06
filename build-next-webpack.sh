@@ -22,8 +22,9 @@ npm install react@^19.2.3 react-dom@^19.2.3 --legacy-peer-deps --no-save
 cd "$ROOT_DIR/ecommerce-homepage"
 
 # Assicurati che le dipendenze siano installate in ecommerce-homepage
-echo "Installing dependencies in ecommerce-homepage..."
-npm install --legacy-peer-deps
+# Include anche devDependencies perché Next.js ha bisogno di @types/* durante il build
+echo "Installing dependencies (including devDependencies) in ecommerce-homepage..."
+NODE_ENV=development npm install --legacy-peer-deps
 
 # Esegui next build con --webpack esplicitamente
 # NODE_PATH include sia root che ecommerce-homepage node_modules per risolvere react
