@@ -439,18 +439,63 @@ export function ProductDetailPageClient({ product }: ProductDetailPageClientProp
           const tripSlot = slots[0];
           
           // Verify slot has capacity
+          // IMPORTANT: For trips, we check if there's ANY capacity, not specific guest/dog counts
+          // This is because trips might have different booking rules
           const availableAdults = (tripSlot.max_adults || 0) - (tripSlot.booked_adults || 0);
           const availableDogs = (tripSlot.max_dogs || 0) - (tripSlot.booked_dogs || 0);
           
-          if (availableAdults < finalGuests || availableDogs < dogs) {
-            logger.warn('ProductDetailPage: Trip slot has insufficient capacity', {
+          logger.debug('ProductDetailPage: Checking slot capacity', {
+            slotId: tripSlot.id,
+            max_adults: tripSlot.max_adults,
+            booked_adults: tripSlot.booked_adults,
+            availableAdults,
+            max_dogs: tripSlot.max_dogs,
+            booked_dogs: tripSlot.booked_dogs,
+            availableDogs,
+            requestedAdults: finalGuests,
+            requestedDogs: dogs
+          });
+          
+          // For trips, check if there's at least 1 spot available (either adults or dogs)
+          // This is more lenient than experiences/classes which require exact capacity
+          if (availableAdults < 1 && availableDogs < 1) {
+            logger.warn('ProductDetailPage: Trip slot has no capacity at all', {
               slotId: tripSlot.id,
               availableAdults,
-              requestedAdults: finalGuests,
+              availableDogs
+            });
+            setError('Il viaggio non ha più posti disponibili per le date selezionate. Si prega di ricaricare la pagina e riprovare.');
+            setIsProcessing(false);
+            bookingCardRef.current?.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+            return;
+          }
+          
+          // Additional check: if user requested specific counts, verify they're available
+          if (finalGuests > 0 && availableAdults < finalGuests) {
+            logger.warn('ProductDetailPage: Trip slot has insufficient adult capacity', {
+              slotId: tripSlot.id,
+              availableAdults,
+              requestedAdults: finalGuests
+            });
+            setError(`Il viaggio non ha abbastanza posti disponibili per ${finalGuests} ospiti. Posti disponibili: ${availableAdults}.`);
+            setIsProcessing(false);
+            bookingCardRef.current?.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+            return;
+          }
+          
+          if (dogs > 0 && availableDogs < dogs) {
+            logger.warn('ProductDetailPage: Trip slot has insufficient dog capacity', {
+              slotId: tripSlot.id,
               availableDogs,
               requestedDogs: dogs
             });
-            setError('Il viaggio non ha più posti disponibili per le date selezionate. Si prega di ricaricare la pagina e riprovare.');
+            setError(`Il viaggio non ha abbastanza posti disponibili per ${dogs} cani. Posti disponibili: ${availableDogs}.`);
             setIsProcessing(false);
             bookingCardRef.current?.scrollIntoView({ 
               behavior: 'smooth', 
