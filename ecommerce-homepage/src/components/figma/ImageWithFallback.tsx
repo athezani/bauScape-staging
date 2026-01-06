@@ -9,7 +9,7 @@ const ERROR_IMG_SRC =
  */
 function isValidImageUrl(url: string | Blob | null | undefined): boolean {
   // Blob non è supportato come URL diretto, deve essere convertito in object URL
-  if (url instanceof Blob) {
+  if (url && typeof url === 'object' && url.constructor === Blob) {
     return false;
   }
   
@@ -65,7 +65,7 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
       return ERROR_IMG_SRC;
     }
     // Se src è un Blob, convertilo in object URL (non supportato, usa placeholder)
-    if (src instanceof Blob) {
+    if (src && typeof src === 'object' && src.constructor === Blob) {
       return ERROR_IMG_SRC;
     }
     return (src as string) || ERROR_IMG_SRC;
@@ -73,7 +73,7 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
 
   // Se l'URL non è valido, mostra direttamente il placeholder
   if (!isValidImageUrl(src)) {
-    const originalUrlString = src instanceof Blob ? '[Blob]' : (src || '[empty]');
+    const originalUrlString = (src && typeof src === 'object' && src.constructor === Blob) ? '[Blob]' : (src || '[empty]');
     return (
       <div
         className={`inline-block bg-gray-100 text-center align-middle ${className ?? ''}`}
@@ -97,7 +97,7 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
     );
   }
 
-  const originalUrlString = src instanceof Blob ? '[Blob]' : (src || '[empty]');
+  const originalUrlString = (src && typeof src === 'object' && src.constructor === Blob) ? '[Blob]' : (src || '[empty]');
   
   return didError ? (
     <div
