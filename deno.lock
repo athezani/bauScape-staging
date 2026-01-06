@@ -158,6 +158,7 @@
             "npm:react@^19.2.3",
             "npm:recharts@^2.15.2",
             "npm:sonner@^2.0.3",
+            "npm:source-map@~0.7.4",
             "npm:stripe@17",
             "npm:tailwind-merge@*",
             "npm:terser@^5.44.1",

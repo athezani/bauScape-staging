@@ -11,11 +11,11 @@ const nextConfig = {
   // I percorsi sono relativi a outputFileTracingRoot (che è __dirname, cioè ecommerce-homepage/)
   outputFileTracingIncludes: {
     '/': [
-      'node_modules/next/dist/compiled/source-map/**/*',
-      'node_modules/next/dist/compiled/source-map-js/**/*',
       'node_modules/next/dist/compiled/**/*',
       'node_modules/next/dist/server/**/*',
       'node_modules/next/dist/shared/**/*',
+      'node_modules/source-map/**/*',
+      'node_modules/source-map-js/**/*',
     ],
   },
   

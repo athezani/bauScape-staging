@@ -2,15 +2,15 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 // Staging Supabase credentials
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL') || 'https://ilbbviadwedumvvwqqon.supabase.co';
-const SUPABASE_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
+const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlsYmJ2aWFkd2VkdW12dndxcW9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2Mzg4NjMsImV4cCI6MjA4MzIxNDg2M30.6CvZV598Yv4YD9tvEo5vIADzBDqynxd8X6SIciDBoGw';
 const WEBSITE_URL = Deno.env.get('WEBSITE_URL') || 'https://staging.flixdog.com';
 
-if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-  console.error('❌ SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY devono essere impostati.');
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  console.error('❌ SUPABASE_URL e SUPABASE_ANON_KEY devono essere impostati.');
   Deno.exit(1);
 }
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 interface TestResult {
   productType: 'experience' | 'class' | 'trip';
