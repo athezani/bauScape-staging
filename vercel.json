@@ -1,6 +1,6 @@
 {
   "buildCommand": "./build-next-webpack.sh",
-  "installCommand": "npm install --legacy-peer-deps",
+  "installCommand": "npm ci --legacy-peer-deps",
   "framework": "nextjs"
 }
 

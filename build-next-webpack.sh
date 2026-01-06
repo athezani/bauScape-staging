@@ -91,12 +91,21 @@ if [ -f "scripts/source-map-stub/next-compiled-source-map/index.js" ]; then
   cp "scripts/source-map-stub/next-compiled-source-map/package.json" "node_modules/next/dist/compiled/source-map/package.json"
   echo "✅ Source-map stub recreated after build"
   
-  # Copia anche nel .next output se esiste
+  # Copia anche nel .next output se esiste (sia server che standalone)
   if [ -d ".next" ]; then
+    # Per build normale
     mkdir -p ".next/server/node_modules/next/dist/compiled/source-map" 2>/dev/null || true
     cp "scripts/source-map-stub/next-compiled-source-map/index.js" ".next/server/node_modules/next/dist/compiled/source-map/index.js" 2>/dev/null || true
     cp "scripts/source-map-stub/next-compiled-source-map/package.json" ".next/server/node_modules/next/dist/compiled/source-map/package.json" 2>/dev/null || true
-    echo "✅ Source-map stub copied to .next output"
+    echo "✅ Source-map stub copied to .next/server output"
+    
+    # Per build standalone (output: 'standalone' in next.config.js)
+    if [ -d ".next/standalone" ]; then
+      mkdir -p ".next/standalone/node_modules/next/dist/compiled/source-map" 2>/dev/null || true
+      cp "scripts/source-map-stub/next-compiled-source-map/index.js" ".next/standalone/node_modules/next/dist/compiled/source-map/index.js" 2>/dev/null || true
+      cp "scripts/source-map-stub/next-compiled-source-map/package.json" ".next/standalone/node_modules/next/dist/compiled/source-map/package.json" 2>/dev/null || true
+      echo "✅ Source-map stub copied to .next/standalone output"
+    fi
   fi
 fi
 

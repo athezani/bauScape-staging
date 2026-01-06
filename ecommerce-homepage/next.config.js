@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   
+  // Modalità standalone per compatibilità Lambda/Vercel
+  // Questo crea una build ottimizzata che include solo i file necessari per il runtime
+  // Risolve il problema "Cannot find module 'next/dist/compiled/source-map'" includendo tutti i moduli compilati
+  output: 'standalone',
+  
   // Imposta la root directory per il tracing dei file
   // Questo risolve il problema con npm workspaces dove Next.js cerca nella root invece che in ecommerce-homepage/
   outputFileTracingRoot: require('path').join(__dirname),
