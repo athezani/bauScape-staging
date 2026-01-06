@@ -18,8 +18,15 @@ cd ecommerce-homepage
 echo "Installing dependencies in ecommerce-homepage..."
 npm install --legacy-peer-deps
 
+# Verifica che react e react-dom siano installati
+if [ ! -d "node_modules/react" ] || [ ! -d "node_modules/react-dom" ]; then
+  echo "ERROR: react or react-dom not found in ecommerce-homepage/node_modules/"
+  echo "Installing react and react-dom explicitly..."
+  npm install react react-dom --legacy-peer-deps
+fi
+
 # Esegui next build con --webpack esplicitamente
-# Usa npm run per assicurarsi che usi le dipendenze locali installate sopra
+# Usa npx con il percorso locale per forzare l'uso delle dipendenze locali
 echo "Building Next.js with webpack..."
-npm run build:next
+NODE_PATH=./node_modules:$NODE_PATH npx --yes next build --webpack
 
