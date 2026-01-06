@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { fetchProduct } from '@/lib/productServer';
 import { ProductDetailPageClient } from '@/components/ProductDetailPageClient';
 import type { ProductType } from '@/types/product';
+// Import runtime fix per source-map
+import '@/utils/source-map-runtime-fix';
 
 interface ProductPageProps {
   params: Promise<{
