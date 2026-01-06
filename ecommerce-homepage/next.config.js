@@ -18,6 +18,28 @@ const nextConfig = {
         net: false,
         tls: false,
       };
+      
+      // Configurazione per risolvere correttamente i moduli ESM di Stripe
+      config.resolve.extensionAlias = {
+        '.js': ['.js', '.ts', '.tsx'],
+        '.jsx': ['.jsx', '.tsx'],
+      };
+      
+      // Assicura che webpack risolva correttamente i moduli ESM
+      config.resolve.conditionNames = ['require', 'node', 'import'];
+      
+      // Configurazione per gestire i moduli ESM di Stripe
+      config.module = config.module || {};
+      config.module.rules = config.module.rules || [];
+      
+      // Aggiungi regola per gestire i moduli ESM di Stripe
+      config.module.rules.push({
+        test: /node_modules\/stripe\/esm\/.*\.js$/,
+        type: 'javascript/auto',
+        resolve: {
+          fullySpecified: false,
+        },
+      });
     }
     
     return config;
