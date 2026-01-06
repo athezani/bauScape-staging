@@ -2,18 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   
-  // RIMOSSO output: 'standalone' - causa problemi con source-map su Vercel staging
-  // Vercel gestisce automaticamente Next.js senza bisogno di standalone mode
-  
   // Mantenere compatibilità con struttura esistente
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
-  turbopack: {},
-
   
+  // Turbopack config (Next.js 16 usa Turbopack di default)
   // src/pages-vite è già ignorato automaticamente perché non è nella struttura app/
+  turbopack: {},
   
+  // Source maps solo in sviluppo, non in produzione per sicurezza
   productionBrowserSourceMaps: false,
-  
   
   // Compressione - HTTP/2 gestisce meglio la compressione, ma manteniamo gzip come fallback
   compress: true,
