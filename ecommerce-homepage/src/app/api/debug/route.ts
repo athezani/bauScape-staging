@@ -42,7 +42,7 @@ export async function GET() {
       const supabase = getSupabaseServerClient();
       debugInfo.supabaseClient = {
         created: true,
-        url: supabase.supabaseUrl?.substring(0, 30) || 'unknown',
+        // Non possiamo accedere a supabaseUrl direttamente (è protected)
       };
     } catch (clientError) {
       debugInfo.supabaseClient = {
