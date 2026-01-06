@@ -69,8 +69,17 @@ export async function fetchProduct(
       };
     }
     
-    const product = mapRowToProduct(data, type);
-    logger.debug(`fetchProduct: Fetched ${type}`, { id, title: product.title });
+    let product: Product;
+    try {
+      product = mapRowToProduct(data, type);
+      logger.debug(`fetchProduct: Fetched ${type}`, { id, title: product.title });
+    } catch (mapError) {
+      logger.error(`fetchProduct: Failed to map ${type}`, mapError, { id, dataKeys: Object.keys(data) });
+      return {
+        product: null,
+        error: `Errore nel mapping del prodotto: ${mapError instanceof Error ? mapError.message : String(mapError)}`,
+      };
+    }
     
     // Load program
     try {

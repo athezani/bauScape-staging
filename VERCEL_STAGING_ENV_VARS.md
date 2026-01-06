@@ -57,6 +57,7 @@ OD_API_KEY=[DA_CONFIGURARE - se usi Odoo]
 
 5. Dopo aver configurato tutto, fai push su `main` della repository `bauScape-staging`
 6. Vercel farà un deploy **Production** (non Preview) perché `main` è il production branch del progetto staging
+7. Il deploy sarà automatico quando fai push su `main`
 
 ## ⚠️ CRITICO - LEGGI ATTENTAMENTE
 

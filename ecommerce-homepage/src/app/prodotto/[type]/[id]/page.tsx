@@ -94,18 +94,26 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 export const revalidate = 60;
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { type, id } = await params;
-  const productType = validateProductType(type);
-  
-  if (!productType) {
-    notFound();
-  }
-  
-  const { product, error } = await fetchProduct(id, productType);
-  
-  if (error || !product) {
-    notFound();
-  }
+  try {
+    const { type, id } = await params;
+    const productType = validateProductType(type);
+    
+    if (!productType) {
+      console.error(`[ProductPage] Invalid product type: ${type}`);
+      notFound();
+    }
+    
+    const { product, error } = await fetchProduct(id, productType);
+    
+    if (error) {
+      console.error(`[ProductPage] Error fetching product: ${error}`, { id, type: productType });
+      notFound();
+    }
+    
+    if (!product) {
+      console.error(`[ProductPage] Product not found`, { id, type: productType });
+      notFound();
+    }
 
   // Structured data for product page
   const productUrl = `https://flixdog.com/prodotto/${type}/${id}`;
@@ -145,5 +153,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <ProductDetailPageClient product={product} />
     </>
   );
+  } catch (error) {
+    console.error('[ProductPage] Unexpected error:', error);
+    throw error; // Re-throw to show 500 error page
+  }
 }
 
