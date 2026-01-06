@@ -1,0 +1,515 @@
+<html lang="en"><body><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="x-apple-disable-message-reformatting"><meta name="color-scheme" content="light dark"><meta name="supported-color-schemes" content="light dark"><title>Conferma Prenotazione - FlixDog</title><!--[if mso]>
+    <noscript>
+        <xml>
+            <o:officedocumentsettings>
+                <o:pixelsperinch>96</o:pixelsperinch>
+            </o:officedocumentsettings>
+        </xml>
+    </noscript>
+    <![endif]--><style>
+		/* Reset */
+		
+		body,
+		table,
+		td,
+		p,
+		a,
+		li {
+			-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;
+		}
+		
+		table {
+			border-collapse: collapse !important;
+		}
+		
+		table,
+		td {
+			mso-table-lspace: 0pt; mso-table-rspace: 0pt;
+		}
+		
+		img {
+			-ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; display: block;
+		}
+		
+		body {
+			margin: 0 !important; padding: 0 !important; width: 100% !important; height: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f5f5f5; line-height: 1.6;
+		}
+		/* Forza larghezza 100% */
+		
+		.wrapper {
+			width: 100% !important; max-width: 100% !important; table-layout: fixed !important;
+		}
+		
+		.container {
+			width: 100% !important; max-width: 600px !important; margin: 0 auto !important;
+		}
+		/* Header */
+		
+		.header {
+			background-color: #ffffff;
+		}
+		
+		.logo {
+			max-width: 180px !important; width: 180px !important; height: auto !important;
+		}
+		/* Typography */
+		
+		.h1 {
+			font-size: 18px; color: #1A0841; font-weight: 600; margin: 0; padding: 0 0 16px 0;
+		}
+		
+		.body-text {
+			font-size: 15px; color: #1A0841; line-height: 1.7; margin: 0; padding: 0 0 30px 0;
+		}
+		
+		.section-title {
+			font-size: 18px; color: #1A0841; font-weight: 700; margin: 0; padding: 0 0 8px 0; border-bottom: 2px solid #1A0841;
+		}
+		/* Boxes */
+		
+		.box {
+			background-color: #ffffff; border: 2px solid #1A0841; border-radius: 12px;
+		}
+		
+		.order-number {
+			font-size: 22px; color: #1A0841; font-weight: 700; letter-spacing: 1px;
+		}
+		
+		.badge {
+			background-color: #FFC68D; color: #1A0841; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; display: inline-block;
+		}
+		
+		.product-name {
+			font-size: 20px; color: #1A0841; font-weight: 700; padding: 10px 0 8px 0;
+		}
+		
+		.product-desc {
+			font-size: 13px; color: #1A0841; line-height: 1.5;
+		}
+		
+		.price-label {
+			font-size: 15px; color: #1A0841; font-weight: 600;
+		}
+		
+		.price-value {
+			font-size: 20px; color: #1A0841; font-weight: 700;
+		}
+		
+		.detail-label {
+			font-size: 11px; color: #1A0841; font-weight: 500; padding-bottom: 3px;
+		}
+		
+		.detail-value {
+			font-size: 15px; color: #1A0841; font-weight: 600;
+		}
+		
+		.info-box {
+			background-color: #ffffff; border: 2px solid #1A0841; border-radius: 12px;
+		}
+		
+		.info-title {
+			font-size: 16px; color: #1A0841; font-weight: 600; padding-bottom: 12px;
+		}
+		
+		.info-text {
+			font-size: 13px; color: #1A0841; line-height: 1.6; padding-left: 18px; position: relative;
+		}
+		
+		.list-item {
+			font-size: 13px; color: #1A0841; line-height: 1.6; padding: 0 0 8px 18px; position: relative;
+		}
+		
+		.list-item-check {
+			position: absolute; left: 0; color: #1A0841 !important; font-weight: bold; font-size: 16px;
+		}
+		
+		.list-item-x {
+			position: absolute; left: 0; color: #dc2626 !important; font-weight: bold; font-size: 16px;
+		}
+		
+		.footer-text {
+			font-size: 13px; color: #1A0841;
+		}
+		
+		.footer-small {
+			font-size: 11px; color: #1A0841;
+		}
+		
+		a {
+			color: #1A0841; text-decoration: none;
+		}
+		
+		.program-day-title {
+			font-size: 15px; color: #1A0841; font-weight: 700; margin: 0; padding: 0 0 8px 0;
+		}
+		
+		.program-day-intro {
+			font-size: 13px; color: #1A0841; line-height: 1.6; margin: 0; padding: 0 0 10px 0;
+		}
+		
+		.program-day-items {
+			font-size: 13px; color: #1A0841; line-height: 1.6; margin: 0; padding: 0 0 0 18px;
+		}
+		/* Dark Mode */
+		
+		@media (prefers-color-scheme: dark) {
+			body {
+				background-color: #ffffff !important;
+			}
+			.body-bg {
+				background-color: #ffffff !important;
+			}
+			.content-bg {
+				background-color: #ffffff !important;
+			}
+			.h1,
+			.section-title,
+			.product-name,
+			.detail-value,
+			.info-title,
+			.price-label,
+			.price-value,
+			.program-day-title {
+				color: #1A0841 !important;
+			}
+			.body-text,
+			.info-text,
+			.product-desc,
+			.detail-label,
+			.list-item,
+			.program-day-intro,
+			.program-day-items {
+				color: #1A0841 !important;
+			}
+			.box {
+				background-color: #ffffff !important; border-color: #1A0841 !important;
+			}
+			.section-title {
+				border-bottom-color: #1A0841 !important;
+			}
+			.info-box {
+				background-color: #ffffff !important; border-color: #1A0841 !important;
+			}
+			.check-bg {
+				background-color: #ffffff !important; border-color: #1A0841 !important;
+			}
+			.check-icon {
+				color: #1A0841 !important;
+			}
+			.list-item-check {
+				color: #1A0841 !important;
+			}
+			.list-item-x {
+				color: #dc2626 !important;
+			}
+			.footer-text,
+			.footer-small {
+				color: #1A0841 !important;
+			}
+			a {
+				color: #1A0841 !important;
+			}
+			.header {
+				background-color: #ffffff !important;
+			}
+			.badge {
+				background-color: #FFC68D !important; color: #1A0841 !important;
+			}
+			table {
+				background-color: #ffffff !important;
+			}
+			td {
+				background-color: transparent !important;
+			}
+		}
+		/* Mobile */
+		
+		@media only screen and (max-width: 600px) {
+			.container {
+				width: 100% !important; max-width: 100% !important;
+			}
+			.pad {
+				padding-left: 16px !important; padding-right: 16px !important;
+			}
+			.logo {
+				max-width: 150px !important; width: 150px !important;
+			}
+			.h1 {
+				font-size: 16px !important;
+			}
+			.body-text {
+				font-size: 14px !important;
+			}
+			.section-title {
+				font-size: 17px !important;
+			}
+			.order-number {
+				font-size: 20px !important;
+			}
+			.product-name {
+				font-size: 18px !important;
+			}
+			.price-value {
+				font-size: 18px !important;
+			}
+		}
+
+	</style><!-- Wrapper 100% -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="width: 100%; background-color: rgb(245, 245, 245); border-collapse: collapse; empty-cells: show; text-size-adjust: 100%; font-size: 16px; font-family: Arial; max-width: 100%; table-layout: fixed;" fr-original-style="width: 100%; background-color: #f5f5f5;" fr-original-class="wrapper body-bg"><tbody><tr><td align="center" style="padding: 0px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0;">
+<!-- Container 600px max -->
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; width: 100%; background-color: rgb(255, 255, 255); border-collapse: collapse; empty-cells: show; text-size-adjust: 100%; font-size: 16px; font-family: Arial; margin: 0px auto;" fr-original-style="max-width: 600px; width: 100%; background-color: #ffffff;" fr-original-class="container content-bg"><!-- Header -->
+<tbody><tr><td align="center" style="padding: 25px 20px; background-color: rgb(255, 255, 255); min-width: 5px; text-size-adjust: 100%; user-select: text; border: 1px solid transparent; background-image: unset; background-position: unset; background-size: unset; background-repeat: unset; background-attachment: unset; background-origin: unset; background-clip: unset;" fr-original-style="padding: 25px 20px; background-color: #ffffff;" fr-original-class="header">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="https://img.mailinblue.com/10316095/images/content_library/original/69406ff2b99fa52a2a0bc82b.png" alt="Content Library Image" style="width: 438px; display: inline-block; vertical-align: bottom; margin-right: 5px; margin-left: 5px; max-width: calc(100% - 10px); text-align: center; border: 0px; height: auto; line-height: 100%; outline: none; text-decoration: none; cursor: pointer; padding: 0px 1px; position: relative;" fr-original-style="width: 438px; display: inline-block; vertical-align: bottom; margin-right: 5px; margin-left: 5px; max-width: calc(100% - 10px); text-align: center;" fr-original-class="fr-draggable"> </td></tr>
+<tr><td style="padding: 0px 24px 30px; background-color: rgb(255, 255, 255); min-width: 5px; text-size-adjust: 100%; user-select: text; border: 1px solid transparent; background-image: unset; background-position: unset; background-size: unset; background-repeat: unset; background-attachment: unset; background-origin: unset; background-clip: unset;" fr-original-style="padding: 0 24px 30px 24px; background-color: #ffffff;" fr-original-class="content-bg pad">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" fr-original-style="" style="border-collapse: collapse; border: none; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;"><!-- Greeting -->
+<tbody><tr><td style="padding: 10px 0px 16px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 1px solid transparent; font-size: 18px; color: rgb(26, 8, 65); font-weight: 600; margin: 0px; background: unset;" fr-original-style="padding: 10px 0 16px 0;" fr-original-class="h1">
+Ciao {{ params.CUSTOMER_NAME }}{{ params.CUSTOMER_SURNAME }},
+</td></tr>
+
+<!-- Body Text -->
+<tr><td style="padding: 0px 0px 30px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 1px solid transparent; font-size: 15px; color: rgb(26, 8, 65); line-height: 1.7; margin: 0px; background: unset;" fr-original-style="padding: 0 0 30px 0;" fr-original-class="body-text">
+La tua prenotazione è stata confermata con successo! Siamo entusiasti di averti con noi per questa esperienza indimenticabile con il tuo amico a quattro zampe.
+</td></tr>
+
+<!-- Order Number -->
+<tr><td style="padding: 0px 0px 25px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 25px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="box"><tbody><tr><td align="center" style="padding: 16px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 16px; background-color: #ffffff !important;">
+<div style="font-size: 12px; padding-bottom: 6px; font-weight: 500; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 12px; color: #1A0841 !important; padding-bottom: 6px; font-weight: 500;">Numero Ordine</div>
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 1px; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 22px; color: #1A0841 !important; font-weight: 700; letter-spacing: 1px;" fr-original-class="order-number">#{{ params.ORDER_NUMBER }}</div>
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Section Title: Prodotto -->
+<tr><td style="padding: 0px 0px 16px; border-width: 1px 1px 2px; border-style: solid; border-color: transparent transparent rgb(26, 8, 65); min-width: 5px; text-size-adjust: 100%; user-select: text; border-image: initial; font-size: 18px; color: rgb(26, 8, 65); font-weight: 700; margin: 0px; background: unset;" fr-original-style="padding: 0 0 16px 0; border-bottom: 2px solid #1A0841;" fr-original-class="section-title">
+Dettagli Prodotto
+</td></tr>
+
+<!-- Product Card -->
+<tr><td style="padding: 0px 0px 25px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 25px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="box"><tbody><tr><td style="padding: 16px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 16px; background-color: #ffffff !important;">
+<div style="padding: 5px 14px; font-size: 11px; font-weight: 700; display: inline-block; background-color: rgb(255, 198, 141) !important; color: rgb(26, 8, 65) !important; border-radius: 20px !important; font-family: Arial;" fr-original-style="background-color: #FFC68D !important; color: #1A0841 !important; padding: 5px 14px; border-radius: 20px !important; -webkit-border-radius: 20px !important; -moz-border-radius: 20px !important; font-size: 11px; font-weight: 700; display: inline-block;" fr-original-class="badge">{{ params.PRODUCT_TYPE }}</div>
+<div style="font-size: 20px; font-weight: 700; padding: 10px 0px 8px; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 20px; color: #1A0841 !important; font-weight: 700; padding: 10px 0 8px 0;" fr-original-class="product-name">{{ params.PRODUCT_NAME }}</div>
+<div style="font-size: 13px; line-height: 1.5; padding-bottom: 12px; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="display: {{ params.PRODUCT_DESCRIPTION_DISPLAY }}; font-size: 13px; color: #1A0841 !important; line-height: 1.5; padding-bottom: 12px;" fr-original-class="product-desc">{{ params.PRODUCT_DESCRIPTION }}</div>
+<!-- Price Row -->
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="padding-top: 12px; margin-top: 6px; border: none; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="border-top: 2px solid #1A0841 !important; padding-top: 12px; margin-top: 6px;"><tbody><tr><td width="50%" style="font-size: 15px; font-weight: 600; text-align: left; vertical-align: middle; padding-top: 12px; color: rgb(26, 8, 65); min-width: 5px; text-size-adjust: 100%; user-select: text; border: 1px solid transparent; background: unset;" fr-original-style="font-size: 15px; color: #1A0841 !important; font-weight: 600; text-align: left; vertical-align: middle; padding-top: 12px;" fr-original-class="price-label">
+Totale Pagato
+</td>
+<td width="50%" style="font-size: 20px; font-weight: 700; text-align: right; vertical-align: middle; padding-top: 12px; color: rgb(26, 8, 65); min-width: 5px; text-size-adjust: 100%; user-select: text; border: 1px solid transparent; background: unset;" fr-original-style="font-size: 20px; color: #1A0841 !important; font-weight: 700; text-align: right; vertical-align: middle; padding-top: 12px;" fr-original-class="price-value">{{ params.TOTAL_AMOUNT }}</td></tr></tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Section Title: Prenotazione -->
+<tr><td style="padding: 0px 0px 16px; border-width: 1px 1px 2px; border-style: solid; border-color: transparent transparent rgb(26, 8, 65); min-width: 5px; text-size-adjust: 100%; user-select: text; border-image: initial; font-size: 18px; color: rgb(26, 8, 65); font-weight: 700; margin: 0px; background: unset;" fr-original-style="padding: 0 0 16px 0; border-bottom: 2px solid #1A0841;" fr-original-class="section-title">
+Dettagli Prenotazione
+</td></tr>
+
+<!-- Detail: Data -->
+<tr><td style="padding: 0px 0px 10px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 10px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="box"><tbody><tr><td style="padding: 12px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 12px; background-color: #ffffff !important;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" fr-original-style="" style="border-collapse: collapse; border: none; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;"><tbody><tr><td style="padding-right: 10px; font-size: 18px; vertical-align: top; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding-right: 10px; font-size: 18px; vertical-align: top;">📅</td>
+<td fr-original-style="" style="min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;">
+<div style="font-size: 11px; padding-bottom: 3px; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 11px; color: #1A0841 !important; padding-bottom: 3px;" fr-original-class="detail-label">Data</div>
+<div style="font-size: 15px; font-weight: 600; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 15px; color: #1A0841 !important; font-weight: 600;" fr-original-class="detail-value">{{ params.BOOKING_DATE }}</div>
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Detail: Orario -->
+<tr style="display: {{ params.BOOKING_TIME_DISPLAY }};"><td style="padding: 0px 0px 10px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 10px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="box"><tbody><tr><td style="padding: 12px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 12px; background-color: #ffffff !important;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" fr-original-style="" style="border-collapse: collapse; border: none; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;"><tbody><tr><td style="padding-right: 10px; font-size: 18px; vertical-align: top; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding-right: 10px; font-size: 18px; vertical-align: top;">🕐</td>
+<td fr-original-style="" style="min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;">
+<div style="font-size: 11px; padding-bottom: 3px; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 11px; color: #1A0841 !important; padding-bottom: 3px;" fr-original-class="detail-label">Orario</div>
+<div style="font-size: 15px; font-weight: 600; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 15px; color: #1A0841 !important; font-weight: 600;" fr-original-class="detail-value">{{ params.BOOKING_TIME }}</div>
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Detail: Partecipanti -->
+<tr style="display: {{ params.NUMBER_OF_ADULTS_DISPLAY }};"><td style="padding: 0px 0px 10px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 10px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="box"><tbody><tr><td style="padding: 12px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 12px; background-color: #ffffff !important;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" fr-original-style="" style="border-collapse: collapse; border: none; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;"><tbody><tr><td style="padding-right: 10px; font-size: 18px; vertical-align: top; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding-right: 10px; font-size: 18px; vertical-align: top;">👥</td>
+<td fr-original-style="" style="min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;">
+<div style="font-size: 11px; padding-bottom: 3px; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 11px; color: #1A0841 !important; padding-bottom: 3px;" fr-original-class="detail-label">Partecipanti</div>
+<div style="font-size: 15px; font-weight: 600; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 15px; color: #1A0841 !important; font-weight: 600;" fr-original-class="detail-value">{{ params.NUMBER_OF_ADULTS }}</div>
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Detail: Cani -->
+<tr style="display: {{ params.NUMBER_OF_DOGS_DISPLAY }};"><td style="padding: 0px 0px 20px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 20px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="box"><tbody><tr><td style="padding: 12px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 12px; background-color: #ffffff !important;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" fr-original-style="" style="border-collapse: collapse; border: none; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;"><tbody><tr><td style="padding-right: 10px; font-size: 18px; vertical-align: top; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding-right: 10px; font-size: 18px; vertical-align: top;">🐕</td>
+<td fr-original-style="" style="min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;">
+<div style="font-size: 11px; padding-bottom: 3px; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 11px; color: #1A0841 !important; padding-bottom: 3px;" fr-original-class="detail-label">Cani</div>
+<div style="font-size: 15px; font-weight: 600; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 15px; color: #1A0841 !important; font-weight: 600;" fr-original-class="detail-value">{{ params.NUMBER_OF_DOGS }}</div>
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Section Title: Cosa è incluso -->
+<tr style="display: {{ params.INCLUDED_ITEMS_DISPLAY }};"><td style="padding: 20px 0px 16px; border-width: 1px 1px 2px; border-style: solid; border-color: transparent transparent rgb(26, 8, 65); min-width: 5px; text-size-adjust: 100%; user-select: text; border-image: initial; font-size: 18px; color: rgb(26, 8, 65); font-weight: 700; margin: 0px; background: unset;" fr-original-style="padding: 20px 0 16px 0; border-bottom: 2px solid #1A0841;" fr-original-class="section-title">
+Cosa è incluso
+</td></tr>
+
+<!-- Info Box: Cosa è incluso -->
+<tr style="display: {{ params.INCLUDED_ITEMS_DISPLAY }};"><td style="padding: 0px 0px 20px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 20px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="info-box"><tbody><tr><td style="padding: 16px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 16px; background-color: #ffffff !important;">
+{{ params.INCLUDED_ITEMS | safe }}
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Section Title: Cosa non è incluso -->
+<tr style="display: {{ params.EXCLUDED_ITEMS_DISPLAY }};"><td style="padding: 20px 0px 16px; border-width: 1px 1px 2px; border-style: solid; border-color: transparent transparent rgb(26, 8, 65); min-width: 5px; text-size-adjust: 100%; user-select: text; border-image: initial; font-size: 18px; color: rgb(26, 8, 65); font-weight: 700; margin: 0px; background: unset;" fr-original-style="padding: 20px 0 16px 0; border-bottom: 2px solid #1A0841;" fr-original-class="section-title">
+Cosa non è incluso
+</td></tr>
+
+<!-- Info Box: Cosa non è incluso -->
+<tr style="display: {{ params.EXCLUDED_ITEMS_DISPLAY }};"><td style="padding: 0px 0px 20px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 20px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="info-box"><tbody><tr><td style="padding: 16px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 16px; background-color: #ffffff !important;">
+{{ params.EXCLUDED_ITEMS | safe }}
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Section Title: Orario e Punto di Incontro -->
+<tr style="display: {{ params.MEETING_INFO_DISPLAY }};"><td style="padding: 20px 0px 16px; border-width: 1px 1px 2px; border-style: solid; border-color: transparent transparent rgb(26, 8, 65); min-width: 5px; text-size-adjust: 100%; user-select: text; border-image: initial; font-size: 18px; color: rgb(26, 8, 65); font-weight: 700; margin: 0px; background: unset;" fr-original-style="padding: 20px 0 16px 0; border-bottom: 2px solid #1A0841;" fr-original-class="section-title">
+Orario e Punto di Incontro
+</td></tr>
+
+<!-- Info Box: Orario e Punto di Incontro -->
+<tr style="display: {{ params.MEETING_INFO_DISPLAY }};"><td style="padding: 0px 0px 20px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 20px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="info-box"><tbody><tr><td style="padding: 16px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 16px; background-color: #ffffff !important;">
+<div style="font-size: 13px; line-height: 1.6; color: rgb(26, 8, 65) !important; font-family: Arial; padding-bottom: 12px;" fr-original-style="font-size: 13px; color: #1A0841 !important; line-height: 1.6; padding-bottom: 12px;" fr-original-class="info-text">{{ params.MEETING_INFO_TEXT }}</div>
+<div style="font-size: 13px; line-height: 1.6; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 13px; color: #1A0841 !important; line-height: 1.6;" fr-original-class="info-text">
+<a href="{{ params.MEETING_INFO_LINK }}?utm_source=brevo&utm_campaign=Order Confirmation - v1&utm_medium=email" style="color: rgb(26, 8, 65); text-decoration: underline; font-family: Arial;" fr-original-style="color: #1A0841; text-decoration: underline;">📍 Visualizza su Google Maps</a>
+</div>
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Section Title: Programma -->
+<tr style="display: {{ params.PROGRAM_DISPLAY }};"><td style="padding: 20px 0px 16px; border-width: 1px 1px 2px; border-style: solid; border-color: transparent transparent rgb(26, 8, 65); min-width: 5px; text-size-adjust: 100%; user-select: text; border-image: initial; font-size: 18px; color: rgb(26, 8, 65); font-weight: 700; margin: 0px; background: unset;" fr-original-style="padding: 20px 0 16px 0; border-bottom: 2px solid #1A0841;" fr-original-class="section-title">
+Programma
+</td></tr>
+
+<!-- Info Box: Programma -->
+<tr style="display: {{ params.PROGRAM_DISPLAY }};"><td style="padding: 0px 0px 20px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 20px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="info-box"><tbody><tr><td style="padding: 16px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 16px; background-color: #ffffff !important;">
+{{ params.PROGRAM | safe }}
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Section Title: Regolamento -->
+<tr><td style="padding: 20px 0px 16px; border-width: 1px 1px 2px; border-style: solid; border-color: transparent transparent rgb(26, 8, 65); min-width: 5px; text-size-adjust: 100%; user-select: text; border-image: initial; font-size: 18px; color: rgb(26, 8, 65); font-weight: 700; margin: 0px; background: unset;" fr-original-style="padding: 20px 0 16px 0; border-bottom: 2px solid #1A0841;" fr-original-class="section-title">
+Regolamento a 6 Zampe
+</td></tr>
+
+<!-- Info Box: Regolamento -->
+<tr><td style="padding: 0px 0px 20px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 20px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="info-box"><tbody><tr><td style="padding: 16px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 16px; background-color: #ffffff !important;">
+<div style="font-size: 13px; line-height: 1.6; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 13px; color: #1A0841 !important; line-height: 1.6;" fr-original-class="info-text">
+Per garantire un'esperienza sicura e piacevole per tutti, ti invitiamo a consultare il nostro <a href="{{ params.REGOLAMENTO_LINK }}?utm_source=brevo&utm_campaign=Order Confirmation - v1&utm_medium=email" style="color: rgb(26, 8, 65); text-decoration: underline; font-family: Arial;" fr-original-style="color: #1A0841; text-decoration: underline;">Regolamento a 6 Zampe</a>.
+</div>
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Section Title: Policy di Cancellazione -->
+<tr style="display: {{ params.CANCELLATION_POLICY_DISPLAY }};"><td style="padding: 20px 0px 16px; border-width: 1px 1px 2px; border-style: solid; border-color: transparent transparent rgb(26, 8, 65); min-width: 5px; text-size-adjust: 100%; user-select: text; border-image: initial; font-size: 18px; color: rgb(26, 8, 65); font-weight: 700; margin: 0px; background: unset;" fr-original-style="padding: 20px 0 16px 0; border-bottom: 2px solid #1A0841;" fr-original-class="section-title">
+Policy di Cancellazione
+</td></tr>
+
+<!-- Info Box: Policy di Cancellazione -->
+<tr style="display: {{ params.CANCELLATION_POLICY_DISPLAY }};"><td style="padding: 0px 0px 20px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0 0 20px 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="info-box"><tbody><tr><td style="padding: 16px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 16px; background-color: #ffffff !important;">
+<div style="font-size: 13px; line-height: 1.6; color: rgb(26, 8, 65) !important; font-family: Arial; white-space: pre-line;" fr-original-style="font-size: 13px; color: #1A0841 !important; line-height: 1.6; white-space: pre-line;" fr-original-class="info-text">{{ params.CANCELLATION_POLICY }}</div>
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- ======================================== -->
+<!-- NUOVA SEZIONE CANCELLAZIONE - INIZIO -->
+<!-- ======================================== -->
+<tr><td style="padding: 10px 0px 30px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 10px 0 30px 0;">
+<div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 0;">
+<h3 style="color: #374151; margin: 0 0 10px 0; font-size: 16px; font-weight: 600;">Hai bisogno di cancellare?</h3>
+<p style="margin: 10px 0; font-size: 13px; color: #374151; line-height: 1.6;">
+Se hai bisogno di cancellare la tua prenotazione, puoi farlo facilmente cliccando sul link qui sotto.
+</p>
+<div style="text-align: center; margin: 20px 0;">
+<a href="{{ params.CANCELLATION_LINK }}" style="display: inline-block; background: #dc2626; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;">
+Richiedi Cancellazione
+</a>
+</div>
+<p style="font-size: 12px; color: #6b7280; margin: 0; text-align: center; font-style: italic;">
+Questo link è valido fino a 24 ore dopo la data dell'esperienza.
+</p>
+</div>
+</td></tr>
+<!-- ======================================== -->
+<!-- NUOVA SEZIONE CANCELLAZIONE - FINE -->
+<!-- ======================================== -->
+
+<!-- Info Box -->
+<tr><td style="padding: 0px; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent; background: unset;" fr-original-style="padding: 0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="overflow: hidden; background-color: rgb(255, 255, 255) !important; border: none; border-radius: 12px !important; border-collapse: collapse; empty-cells: show; max-width: 100%; text-size-adjust: 100%; font-size: 16px; font-family: Arial;" fr-original-style="background-color: #ffffff !important; border: 2px solid #1A0841 !important; border-radius: 12px !important; -webkit-border-radius: 12px !important; -moz-border-radius: 12px !important; overflow: hidden;" fr-original-class="info-box"><tbody><tr><td style="padding: 16px; background: unset; min-width: 5px; text-size-adjust: 100%; user-select: text; border: 0px solid transparent;" fr-original-style="padding: 16px; background-color: #ffffff !important;">
+<div style="font-size: 16px; font-weight: 600; padding-bottom: 12px; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 16px; color: #1A0841 !important; font-weight: 600; padding-bottom: 12px;" fr-original-class="info-title">Cosa succede ora?</div>
+<div style="font-size: 13px; line-height: 1.6; padding: 0px 0px 8px 18px; position: relative; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 13px; color: #1A0841 !important; line-height: 1.6; padding: 0 0 8px 18px; position: relative;" fr-original-class="info-text">
+<span style="position: absolute; left: 0; color: #1A0841 !important; font-weight: bold;">•</span> Riceverai ulteriori dettagli via email prima della data della prenotazione
+</div>
+<div style="font-size: 13px; line-height: 1.6; padding: 0px 0px 8px 18px; position: relative; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 13px; color: #1A0841 !important; line-height: 1.6; padding: 0 0 8px 18px; position: relative;" fr-original-class="info-text">
+<span style="position: absolute; left: 0; color: #1A0841 !important; font-weight: bold;">•</span> Se hai domande o necessiti di modifiche, contattaci tramite email o telefono
+</div>
+<div style="font-size: 13px; line-height: 1.6; padding: 0px 0px 0px 18px; position: relative; color: rgb(26, 8, 65) !important; font-family: Arial;" fr-original-style="font-size: 13px; color: #1A0841 !important; line-height: 1.6; padding: 0 0 0 18px; position: relative;" fr-original-class="info-text">
+<span style="position: absolute; left: 0; color: #1A0841 !important; font-weight: bold;">•</span> Conserva questa email come conferma della tua prenotazione
+</div>
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<!-- Footer -->
+<tr><td style="padding: 24px 20px; text-align: center; background-color: rgb(255, 255, 255); border-width: 1px; border-style: solid; border-color: rgb(26, 8, 65) transparent transparent; min-width: 5px; text-size-adjust: 100%; user-select: text; border-image: initial; background-image: unset; background-position: unset; background-size: unset; background-repeat: unset; background-attachment: unset; background-origin: unset; background-clip: unset;" fr-original-style="padding: 24px 20px; text-align: center; background-color: #ffffff; border-top: 1px solid #1A0841;" fr-original-class="body-bg">
+<div style="font-size: 13px; color: rgb(26, 8, 65); padding-bottom: 8px; font-family: Arial;" fr-original-style="font-size: 13px; color: #1A0841; padding-bottom: 8px;" fr-original-class="footer-text">
+<img src="https://img.mailinblue.com/10316095/images/content_library/original/69406ff2b99fa52a2a0bc82b.png" alt="Content Library Image" style="width: 175px; display: inline-block; vertical-align: bottom; margin-right: 5px; margin-left: 5px; max-width: calc(100% - 10px); text-align: center; border: 0px; height: auto; line-height: 100%; outline: none; text-decoration: none; cursor: pointer; padding: 0px 1px; position: relative;" fr-original-style="width: 175px; display: inline-block; vertical-align: bottom; margin-right: 5px; margin-left: 5px; max-width: calc(100% - 10px); text-align: center;" fr-original-class="fr-draggable">
+<br> Viaggi ed esperienze indimenticabili con il tuo cane
+</div>
+<div style="font-size: 11px; color: rgb(26, 8, 65); padding: 12px 0px; font-family: Arial;" fr-original-style="font-size: 11px; color: #1A0841; padding: 12px 0;" fr-original-class="footer-small">
+ID Prenotazione: {{ params.BOOKING_ID }}
+<br> Se hai domande, rispondi a questa email o contattaci a
+<br>
+<a href="mailto:info@flixdog.com" style="color: rgb(26, 8, 65); text-decoration: none; user-select: auto; text-size-adjust: 100%;" fr-original-style="color: #1A0841; text-decoration: none;">info@flixdog.com</a>
+</div>
+<div style="padding: 12px 0px; font-size: 12px; font-family: Arial;" fr-original-style="padding: 12px 0; font-size: 12px;">
+<a href="https://flixdog.com?utm_source=brevo&utm_campaign=Order Confirmation - v1&utm_medium=email" style="color: rgb(26, 8, 65); text-decoration: none; padding: 0px 8px; user-select: auto; text-size-adjust: 100%;" fr-original-style="color: #1A0841; text-decoration: none; padding: 0 8px;">Sito Web</a>
+<span style="color: #1A0841;">|</span>
+<a href="#" style="color: rgb(26, 8, 65); text-decoration: none; padding: 0px 8px; user-select: auto; text-size-adjust: 100%;" fr-original-style="color: #1A0841; text-decoration: none; padding: 0 8px;">Privacy Policy</a>
+<span style="color: #1A0841;">|</span>
+<a href="#" style="color: rgb(26, 8, 65); text-decoration: none; padding: 0px 8px; user-select: auto; text-size-adjust: 100%;" fr-original-style="color: #1A0841; text-decoration: none; padding: 0 8px;">Termini</a>
+</div>
+<div style="font-size: 11px; color: rgb(26, 8, 65); padding-top: 12px; font-family: Arial;" fr-original-style="font-size: 11px; color: #1A0841; padding-top: 12px;" fr-original-class="footer-small">
+© 2025 FlixDog. Tutti i diritti riservati.
+</div>
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+
+
+
+
+</body></html>
