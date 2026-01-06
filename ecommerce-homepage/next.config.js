@@ -42,16 +42,26 @@ const nextConfig = {
     }
     
     if (isServer) {
-      // Crea alias per risolvere next/dist/compiled/source-map allo stub che creiamo
-      // Questo è necessario perché Next.js cerca source-map in next/dist/compiled/ ma non esiste
-      const path = require('path');
-      const stubPath = path.join(__dirname, 'node_modules', 'next', 'dist', 'compiled', 'source-map');
-      
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        // Usa lo stub che creiamo durante il build invece di source-map diretto
-        'next/dist/compiled/source-map': stubPath,
-      };
+      // Crea alias per risolvere next/dist/compiled/source-map direttamente a source-map
+      // Questo è il modo più robusto per risolvere il problema
+      try {
+        const sourceMapPath = require.resolve('source-map');
+        config.resolve.alias = {
+          ...config.resolve.alias,
+          // Risolvi direttamente a source-map invece di cercare lo stub
+          'next/dist/compiled/source-map': sourceMapPath,
+        };
+        console.log('✅ Webpack alias: next/dist/compiled/source-map ->', sourceMapPath);
+      } catch (e) {
+        // Fallback: usa lo stub se source-map non è disponibile
+        const path = require('path');
+        const stubPath = path.join(__dirname, 'node_modules', 'next', 'dist', 'compiled', 'source-map');
+        config.resolve.alias = {
+          ...config.resolve.alias,
+          'next/dist/compiled/source-map': stubPath,
+        };
+        console.warn('⚠️ Using stub path for source-map:', stubPath);
+      }
       
       // Aggiungi source-map-js solo se è installato
       try {

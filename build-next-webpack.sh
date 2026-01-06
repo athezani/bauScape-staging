@@ -82,3 +82,21 @@ fi
 echo "Building Next.js with webpack using workspace node_modules..."
 NODE_PATH="$ROOT_DIR/node_modules:$ROOT_DIR/ecommerce-homepage/node_modules:$NODE_PATH" npx --yes next build --webpack
 
+# IMPORTANTE: Copia lo stub anche dopo il build per assicurarsi che sia nel bundle finale
+# Vercel potrebbe pulire node_modules dopo il build, quindi dobbiamo ricreare lo stub
+echo "Ensuring source-map stub is available after build..."
+if [ -f "scripts/source-map-stub/next-compiled-source-map/index.js" ]; then
+  mkdir -p "node_modules/next/dist/compiled/source-map"
+  cp "scripts/source-map-stub/next-compiled-source-map/index.js" "node_modules/next/dist/compiled/source-map/index.js"
+  cp "scripts/source-map-stub/next-compiled-source-map/package.json" "node_modules/next/dist/compiled/source-map/package.json"
+  echo "✅ Source-map stub recreated after build"
+  
+  # Copia anche nel .next output se esiste
+  if [ -d ".next" ]; then
+    mkdir -p ".next/server/node_modules/next/dist/compiled/source-map" 2>/dev/null || true
+    cp "scripts/source-map-stub/next-compiled-source-map/index.js" ".next/server/node_modules/next/dist/compiled/source-map/index.js" 2>/dev/null || true
+    cp "scripts/source-map-stub/next-compiled-source-map/package.json" ".next/server/node_modules/next/dist/compiled/source-map/package.json" 2>/dev/null || true
+    echo "✅ Source-map stub copied to .next output"
+  fi
+fi
+
