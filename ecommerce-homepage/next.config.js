@@ -71,8 +71,21 @@ const nextConfig = {
       // Aggiungi source-map-js solo se è installato
       try {
         config.resolve.alias['next/dist/compiled/source-map-js'] = require.resolve('source-map-js');
+        console.log('✅ Webpack alias: next/dist/compiled/source-map-js ->', require.resolve('source-map-js'));
       } catch (e) {
         // source-map-js non è installato, va bene
+        console.log('ℹ️ source-map-js not installed, skipping alias');
+      }
+      
+      // Assicurati che source-map sia incluso nel bundle
+      config.externals = config.externals || [];
+      if (Array.isArray(config.externals)) {
+        config.externals = config.externals.filter((ext) => {
+          if (typeof ext === 'string' && ext.includes('source-map')) {
+            return false; // Rimuovi source-map dagli externals per includerlo nel bundle
+          }
+          return true;
+        });
       }
     }
     return config;

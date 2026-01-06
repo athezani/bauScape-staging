@@ -95,7 +95,10 @@ export const revalidate = 60;
 
 export default async function ProductPage({ params }: ProductPageProps) {
   try {
+    console.log('[ProductPage] Starting page render');
     const { type, id } = await params;
+    console.log('[ProductPage] Params resolved', { type, id });
+    
     const productType = validateProductType(type);
     
     if (!productType) {
@@ -104,7 +107,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
     }
     
     console.log(`[ProductPage] Fetching product`, { id, type: productType });
-    const { product, error } = await fetchProduct(id, productType);
+    let product, error;
+    try {
+      const result = await fetchProduct(id, productType);
+      product = result.product;
+      error = result.error;
+    } catch (fetchErr) {
+      console.error('[ProductPage] Exception during fetchProduct:', fetchErr);
+      console.error('[ProductPage] Error stack:', fetchErr instanceof Error ? fetchErr.stack : 'No stack');
+      throw fetchErr; // Re-throw to show 500 error
+    }
     
     if (error) {
       console.error(`[ProductPage] Error fetching product: ${error}`, { id, type: productType });
@@ -157,7 +169,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
     </>
   );
   } catch (error) {
-    console.error('[ProductPage] Unexpected error:', error);
+    console.error('[ProductPage] ========================================');
+    console.error('[ProductPage] ❌❌❌ UNEXPECTED ERROR ❌❌❌');
+    console.error('[ProductPage] Error type:', error?.constructor?.name || typeof error);
+    console.error('[ProductPage] Error message:', error instanceof Error ? error.message : String(error));
+    if (error instanceof Error && error.stack) {
+      console.error('[ProductPage] Stack trace:', error.stack);
+    }
+    console.error('[ProductPage] ========================================');
     throw error; // Re-throw to show 500 error page
   }
 }
