@@ -26,8 +26,33 @@ const nextConfig = {
   // Usiamo webpack invece (specificato con --webpack nel build script)
   // src/pages-vite è già ignorato automaticamente perché non è nella struttura app/
   
-  // Source maps solo in sviluppo, non in produzione per sicurezza
+  // Source maps completamente disabilitati in produzione
+  // Questo risolve il problema con 'Cannot find module next/dist/compiled/source-map' su Vercel
   productionBrowserSourceMaps: false,
+  
+  // Disabilita source maps anche per il server-side e crea alias per source-map
+  // Questo risolve il problema con 'Cannot find module next/dist/compiled/source-map' su Vercel
+  webpack: (config, { isServer, dev }) => {
+    if (!dev && isServer) {
+      // Disabilita source maps per il server in produzione
+      config.devtool = false;
+      
+      // Crea alias per risolvere next/dist/compiled/source-map a source-map
+      // Questo è necessario perché Next.js cerca source-map in next/dist/compiled/ ma non esiste
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'next/dist/compiled/source-map': require.resolve('source-map'),
+      };
+      
+      // Aggiungi source-map-js solo se è installato
+      try {
+        config.resolve.alias['next/dist/compiled/source-map-js'] = require.resolve('source-map-js');
+      } catch (e) {
+        // source-map-js non è installato, va bene
+      }
+    }
+    return config;
+  },
   
   // Compressione - HTTP/2 gestisce meglio la compressione, ma manteniamo gzip come fallback
   compress: true,
