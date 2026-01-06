@@ -454,16 +454,49 @@ export function ProductDetailPageClient({ product }: ProductDetailPageClientProp
             availableAdults,
             availableDogs
           });
-          setSelectedSlotId(tripSlot.id);
-          setSelectedDate(tripSlot.date);
+          
+          // Use the slot directly instead of relying on state update
+          // This ensures we can continue with booking immediately
+          const slotIdToUse = tripSlot.id;
+          const dateToUse = tripSlot.date;
+          
+          // Update state for UI consistency
+          setSelectedSlotId(slotIdToUse);
+          setSelectedDate(dateToUse);
           setSelectedTimeSlot(null);
-          // Wait a moment for state to update, then continue with booking
-          await new Promise(resolve => setTimeout(resolve, 100));
-          // Continue with booking flow - don't return here
+          
           logger.debug('ProductDetailPage: Trip slot selected, continuing with booking', {
-            slotId: tripSlot.id,
-            date: tripSlot.date
+            slotId: slotIdToUse,
+            date: dateToUse
           });
+          
+          // Continue with booking flow using the slot we just found
+          // Skip the validation check below since we have the slot
+          // We'll use slotIdToUse and dateToUse directly in the checkout redirect
+          
+          // Build checkout URL with all parameters
+          const checkoutParams = new URLSearchParams({
+            productId: product.id,
+            productType: product.type,
+            slotId: slotIdToUse,
+            date: dateToUse,
+            guests: String(finalGuests),
+            dogs: String(dogs),
+          });
+
+          logger.debug('Redirecting to internal checkout (from trip fallback)', {
+            productId: product.id,
+            productType: product.type,
+            availabilitySlotId: slotIdToUse,
+            date: dateToUse,
+            guests: finalGuests,
+            dogs,
+          });
+
+          // Redirect to internal checkout page
+          router.push(`/checkout?${checkoutParams.toString()}`);
+          setIsProcessing(false);
+          return; // Exit early since we're redirecting
         } else {
           logger.warn('ProductDetailPage: No trip slots available', {
             productId: product.id,
