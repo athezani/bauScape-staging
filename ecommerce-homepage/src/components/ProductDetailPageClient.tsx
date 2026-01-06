@@ -254,15 +254,26 @@ export function ProductDetailPageClient({ product }: ProductDetailPageClientProp
     logger.debug('ProductDetailPage: handleBooking called', { 
       selectedSlotId, 
       selectedDate, 
+      selectedTimeSlot,
       productType: product.type,
       productId: product.id,
       guests: finalGuests,
       dogs,
+      hasSelectedSlot: !!selectedSlotId,
+      hasSelectedDate: !!selectedDate,
     });
     
     // For trips, we need to wait a bit for auto-selection to complete
     // Check if we have a trip without selected slot - try to get it from availability
+    // IMPORTANT: AvailabilitySelector should auto-select for trips, but if it hasn't yet,
+    // we need to load it here as a fallback
     if (product.type === 'trip' && (!selectedSlotId || !selectedDate)) {
+      logger.warn('ProductDetailPage: Trip without selected slot in handleBooking - this should not happen if AvailabilitySelector is working', {
+        productId: product.id,
+        selectedSlotId,
+        selectedDate,
+        selectedTimeSlot
+      });
       logger.debug('ProductDetailPage: Trip without selected slot, trying to load directly', {
         productId: product.id,
         selectedSlotId,
@@ -533,15 +544,29 @@ export function ProductDetailPageClient({ product }: ProductDetailPageClientProp
     }
     
     // For experiences/classes, require manual selection
-    if (product.type !== 'trip' && (!selectedSlotId || !selectedDate)) {
-      logger.warn('ProductDetailPage: Missing required fields for booking', { selectedSlotId, selectedDate });
-      setError('Per favore seleziona una data e un orario disponibili per continuare con la prenotazione.');
-      setIsProcessing(false);
-      bookingCardRef.current?.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'center' 
+    // For trips, if we reach here without selectedSlotId, it means the fallback above didn't find a slot
+    if (!selectedSlotId || !selectedDate) {
+      logger.error('ProductDetailPage: Missing required fields for booking - this should not happen for trips', { 
+        selectedSlotId, 
+        selectedDate,
+        productType: product.type,
+        productId: product.id
       });
-      return;
+      
+      if (product.type === 'trip') {
+        // This means the fallback above didn't find a slot - error already set
+        logger.error('ProductDetailPage: Trip booking failed - no slot found in fallback');
+        setIsProcessing(false);
+        return;
+      } else {
+        setError('Per favore seleziona una data e un orario disponibili per continuare con la prenotazione.');
+        setIsProcessing(false);
+        bookingCardRef.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+        return;
+      }
     }
 
            // Validate inputs before making request
