@@ -6,6 +6,16 @@ const nextConfig = {
   // Questo risolve il problema con npm workspaces dove Next.js cerca nella root invece che in ecommerce-homepage/
   outputFileTracingRoot: require('path').join(__dirname),
   
+  // Include esplicitamente i file di Next.js nel bundle per evitare errori runtime su Vercel
+  // Questo è necessario perché Vercel potrebbe non tracciare correttamente i file di Next.js in un monorepo
+  outputFileTracingIncludes: {
+    '/': [
+      'node_modules/next/dist/compiled/**/*',
+      'node_modules/next/dist/server/**/*',
+      'node_modules/next/dist/shared/**/*',
+    ],
+  },
+  
   // Mantenere compatibilità con struttura esistente
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   

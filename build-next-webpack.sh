@@ -14,11 +14,18 @@ ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # Naviga nella app Next.js
 cd "$ROOT_DIR/ecommerce-homepage"
 
-# IMPORTANTE: Installa TUTTE le devDependencies perché Next.js ha bisogno di @types/* durante il build TypeScript
-# Questo è necessario perché Vercel (con NODE_ENV=production) non installa devDependencies di default
-# In produzione funziona perché le devDependencies sono già installate o perché la configurazione è diversa
-echo "Installing devDependencies (including @types/react) for TypeScript build..."
+# IMPORTANTE: Installa TUTTE le dipendenze (incluso Next.js) nel workspace
+# Questo è necessario perché Vercel ha bisogno di Next.js installato nel workspace per il runtime
+# In produzione funziona perché Next.js è già installato correttamente
+echo "Installing all dependencies (including Next.js) in ecommerce-homepage workspace..."
 NODE_ENV=development npm install --legacy-peer-deps
+
+# Verifica che Next.js sia installato correttamente
+if [ ! -d "node_modules/next" ]; then
+  echo "ERROR: Next.js not found in ecommerce-homepage/node_modules!"
+  echo "Installing Next.js explicitly..."
+  npm install next@16.1.1 --legacy-peer-deps --save
+fi
 
 echo "Building Next.js with webpack using workspace node_modules..."
 NODE_PATH="$ROOT_DIR/node_modules:$ROOT_DIR/ecommerce-homepage/node_modules:$NODE_PATH" npx --yes next build --webpack
