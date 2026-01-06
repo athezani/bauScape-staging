@@ -23,15 +23,23 @@ Il problema persiste perché:
 
 ## 🚨 AZIONE CRITICA: Configurare Vercel Dashboard
 
-**IMPORTANTE**: Devi configurare Vercel Dashboard per usare il branch corretto e il build command corretto.
+**IMPORTANTE**: Devi configurare Vercel Dashboard per usare il branch corretto, la Root Directory corretta e il build command corretto.
 
-### Step 1: Verifica Branch di Deploy
+### Step 1: Configura Root Directory (CRITICO - Risolve errore routes-manifest.json)
 
-1. Vai su **Vercel Dashboard** → Progetto `bauscape-staging` → **Settings** → **Git**
+1. Vai su **Vercel Dashboard** → Progetto `bauscape-staging` → **Settings** → **General**
+2. Scorri fino a **Root Directory**
+3. **DEVE essere**: `ecommerce-homepage` (NON vuoto o `/`)
+4. Se è vuoto o `/`, cambialo a `ecommerce-homepage` e salva
+5. **Questo è CRITICO** - senza questo, Vercel cerca `.next/routes-manifest.json` nella root invece che in `ecommerce-homepage/.next/`
+
+### Step 2: Verifica Branch di Deploy
+
+1. Vai su **Settings** → **Git**
 2. Verifica che il **Production Branch** sia `staging-clean-final` (non `main`)
 3. Se è `main`, cambialo a `staging-clean-final` e salva
 
-### Step 2: Configura Build Command
+### Step 3: Configura Build Command
 
 1. Vai su **Settings** → **General** → **Build & Development Settings**
 2. **Build Command**: Deve essere esattamente:
@@ -44,7 +52,7 @@ Il problema persiste perché:
 5. **Output Directory**: **vuoto** (Next.js usa `.next/` automaticamente)
 6. Clicca **Save**
 
-### Step 3: Pulisci Cache e Riedploya
+### Step 4: Pulisci Cache e Riedploya
 
 1. Vai su **Deployments**
 2. Clicca sui 3 puntini dell'ultimo deploy
@@ -74,6 +82,7 @@ Dovresti vedere:
 ## ✅ Checklist Pre-Deploy
 
 - [ ] Build locale funziona: `./build-next-webpack.sh` completa senza errori
+- [ ] **Root Directory su Vercel è `ecommerce-homepage`** (CRITICO - risolve routes-manifest.json)
 - [ ] Production Branch su Vercel è `staging-clean-final` (non `main`)
 - [ ] Build Command su Vercel è `./build-next-webpack.sh`
 - [ ] Framework Preset su Vercel è **Next.js**
@@ -101,5 +110,20 @@ Dopo aver configurato correttamente:
 - ✅ Build completa senza errori Stripe
 - ✅ Nessun errore "Module not found" per Stripe resources
 - ✅ Build usa webpack (non Turbopack)
+- ✅ Nessun errore "routes-manifest.json not found" (risolto con Root Directory)
 - ✅ Deploy completato con successo
+
+## 🔍 Errore "routes-manifest.json not found"
+
+Se vedi questo errore:
+```
+Error: The file "/vercel/path0/.next/routes-manifest.json" couldn't be found.
+```
+
+**Causa**: Root Directory su Vercel Dashboard è vuota o `/` invece di `ecommerce-homepage`
+
+**Soluzione**: 
+1. Vai su Vercel Dashboard → Settings → General → Root Directory
+2. Imposta a `ecommerce-homepage`
+3. Salva e riedploya
 
