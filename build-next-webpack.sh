@@ -40,7 +40,19 @@ fi
 # Crea lo stub di source-map nella posizione che Next.js si aspetta
 # IMPORTANTE: Questo deve essere fatto PRIMA del build per assicurarsi che lo stub sia disponibile
 echo "Creating source-map stub for Next.js..."
-if [ -f "scripts/create-source-map-stub.js" ]; then
+
+# Crea la directory se non esiste
+mkdir -p "node_modules/next/dist/compiled/source-map"
+
+# Copia lo stub committato nel repository nella posizione corretta
+if [ -f "scripts/source-map-stub/next/dist/compiled/source-map/index.js" ]; then
+  echo "Copying committed source-map stub..."
+  cp "scripts/source-map-stub/next/dist/compiled/source-map/index.js" "node_modules/next/dist/compiled/source-map/index.js"
+  cp "scripts/source-map-stub/next/dist/compiled/source-map/package.json" "node_modules/next/dist/compiled/source-map/package.json"
+  echo "✅ Source-map stub copied successfully"
+elif [ -f "scripts/create-source-map-stub.js" ]; then
+  # Fallback: crea lo stub usando lo script se il file committato non esiste
+  echo "Committed stub not found, creating with script..."
   node scripts/create-source-map-stub.js
   if [ $? -eq 0 ]; then
     echo "✅ Source-map stub created successfully"
@@ -49,7 +61,7 @@ if [ -f "scripts/create-source-map-stub.js" ]; then
     exit 1
   fi
 else
-  echo "❌ ERROR: create-source-map-stub.js not found - build will likely fail"
+  echo "❌ ERROR: Neither committed stub nor create-source-map-stub.js found - build will likely fail"
   exit 1
 fi
 
