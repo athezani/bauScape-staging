@@ -1,5 +1,4 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { getSupabaseConfig } from '../utils/env';
 import { logger } from '../utils/logger';
 
 let cachedClient: SupabaseClient | null = null;
@@ -10,28 +9,25 @@ export function getSupabaseClient(): SupabaseClient {
   }
 
   try {
-    const { url, anonKey } = getSupabaseConfig();
-    
-    // Log per debug (solo in sviluppo, mai in produzione)
-    logger.debug('SupabaseClient initializing', {
-      url: url ? `${url.substring(0, 20)}...` : 'missing',
-      anonKeyLength: anonKey?.length ?? 0,
-      hasUrl: !!url,
-      hasAnonKey: !!anonKey,
-    });
-    
-    if (!url || !anonKey) {
+    // Direct access to process.env.NEXT_PUBLIC_* for client-side
+    // Next.js replaces these at BUILD TIME with literal strings
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      const availableKeys = typeof process !== 'undefined' && process.env
+        ? Object.keys(process.env).filter(k => k.includes('SUPABASE') || k.includes('NEXT_PUBLIC'))
+        : [];
+      const errorMsg = `[ERROR: SupabaseClient configuration error] Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your environment. Available keys: ${availableKeys.join(', ')}`;
       logger.error('SupabaseClient missing configuration', undefined, {
-        hasUrl: !!url,
-        hasAnonKey: !!anonKey,
-        envKeys: typeof process !== 'undefined' && process.env 
-          ? Object.keys(process.env).filter(k => k.includes('SUPABASE'))
-          : [],
+        hasUrl: !!supabaseUrl,
+        hasAnonKey: !!supabaseAnonKey,
+        availableKeys,
       });
-      throw new Error('Supabase configuration is missing. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.');
+      throw new Error(errorMsg);
     }
     
-    cachedClient = createClient(url, anonKey, {
+    cachedClient = createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: false,
       },
