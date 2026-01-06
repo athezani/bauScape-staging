@@ -2,30 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   
-  // Modalità standalone per compatibilità Lambda/Vercel
-  // Questo crea una build ottimizzata che include solo i file necessari per il runtime
-  // Risolve il problema "Cannot find module 'next/dist/compiled/source-map'" includendo tutti i moduli compilati
-  output: 'standalone',
-  
-  // Imposta la root directory per il tracing dei file
-  // Questo risolve il problema con npm workspaces dove Next.js cerca nella root invece che in ecommerce-homepage/
-  outputFileTracingRoot: require('path').join(__dirname),
-  
-  // Include esplicitamente i file di Next.js nel bundle per evitare errori runtime su Vercel
-  // Questo è necessario perché Vercel potrebbe non tracciare correttamente i file di Next.js in un monorepo
-  // I percorsi sono relativi a outputFileTracingRoot (che è __dirname, cioè ecommerce-homepage/)
-  outputFileTracingIncludes: {
-    '/': [
-      'node_modules/next/dist/compiled/**/*',
-      'node_modules/next/dist/server/**/*',
-      'node_modules/next/dist/shared/**/*',
-      'node_modules/source-map/**/*',
-      'node_modules/source-map-js/**/*',
-      // Include esplicitamente lo stub di source-map che creiamo durante il build
-      'node_modules/next/dist/compiled/source-map/index.js',
-      'node_modules/next/dist/compiled/source-map/package.json',
-    ],
-  },
+  // RIMOSSO output: 'standalone' - causa problemi con source-map su Vercel staging
+  // Vercel gestisce automaticamente Next.js senza bisogno di standalone mode
   
   // Mantenere compatibilità con struttura esistente
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
@@ -34,60 +12,13 @@ const nextConfig = {
   // Usiamo webpack invece (specificato con --webpack nel build script)
   // src/pages-vite è già ignorato automaticamente perché non è nella struttura app/
   
-  // Source maps completamente disabilitati in produzione
-  // Questo risolve il problema con 'Cannot find module next/dist/compiled/source-map' su Vercel
+  // Source maps completamente disabilitati - Next.js non cercherà source-map se sono disabilitati
   productionBrowserSourceMaps: false,
   
-  // Disabilita source maps anche per il server-side e crea alias per source-map
-  // Questo risolve il problema con 'Cannot find module next/dist/compiled/source-map' su Vercel
+  // Disabilita source maps anche per il server-side
   webpack: (config, { isServer, dev }) => {
-    // Disabilita source maps sempre in produzione (sia client che server)
-    if (!dev) {
-      config.devtool = false;
-    }
-    
-    if (isServer) {
-      // Crea alias per risolvere next/dist/compiled/source-map direttamente a source-map
-      // Questo è il modo più robusto per risolvere il problema
-      try {
-        const sourceMapPath = require.resolve('source-map');
-        config.resolve.alias = {
-          ...config.resolve.alias,
-          // Risolvi direttamente a source-map invece di cercare lo stub
-          'next/dist/compiled/source-map': sourceMapPath,
-        };
-        console.log('✅ Webpack alias: next/dist/compiled/source-map ->', sourceMapPath);
-      } catch (e) {
-        // Fallback: usa lo stub se source-map non è disponibile
-        const path = require('path');
-        const stubPath = path.join(__dirname, 'node_modules', 'next', 'dist', 'compiled', 'source-map');
-        config.resolve.alias = {
-          ...config.resolve.alias,
-          'next/dist/compiled/source-map': stubPath,
-        };
-        console.warn('⚠️ Using stub path for source-map:', stubPath);
-      }
-      
-      // Aggiungi source-map-js solo se è installato
-      try {
-        config.resolve.alias['next/dist/compiled/source-map-js'] = require.resolve('source-map-js');
-        console.log('✅ Webpack alias: next/dist/compiled/source-map-js ->', require.resolve('source-map-js'));
-      } catch (e) {
-        // source-map-js non è installato, va bene
-        console.log('ℹ️ source-map-js not installed, skipping alias');
-      }
-      
-      // Assicurati che source-map sia incluso nel bundle
-      config.externals = config.externals || [];
-      if (Array.isArray(config.externals)) {
-        config.externals = config.externals.filter((ext) => {
-          if (typeof ext === 'string' && ext.includes('source-map')) {
-            return false; // Rimuovi source-map dagli externals per includerlo nel bundle
-          }
-          return true;
-        });
-      }
-    }
+    // Disabilita source maps completamente (sia client che server)
+    config.devtool = false;
     return config;
   },
   
