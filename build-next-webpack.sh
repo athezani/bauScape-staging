@@ -79,6 +79,13 @@ else
   exit 1
 fi
 
+echo "Verifying source-map is installed..."
+cd "$ECOM_DIR"
+if ! npm list source-map >/dev/null 2>&1; then
+  echo "⚠️ source-map not found, installing..."
+  npm install source-map@^0.7.4 --save --legacy-peer-deps
+fi
+
 echo "Building Next.js with webpack using workspace node_modules..."
 NODE_PATH="$ROOT_DIR/node_modules:$ROOT_DIR/ecommerce-homepage/node_modules:$NODE_PATH" npx --yes next build --webpack
 
