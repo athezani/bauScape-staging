@@ -8,19 +8,10 @@ const nextConfig = {
   // Mantenere compatibilità con struttura esistente
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   
-  // Turbopack disabilitato - Stripe v17.0.0 non è compatibile con Turbopack
-  // Usiamo webpack invece (specificato con --webpack nel build script)
   // src/pages-vite è già ignorato automaticamente perché non è nella struttura app/
   
-  // Source maps completamente disabilitati - Next.js non cercherà source-map se sono disabilitati
   productionBrowserSourceMaps: false,
   
-  // Disabilita source maps anche per il server-side
-  webpack: (config, { isServer, dev }) => {
-    // Disabilita source maps completamente (sia client che server)
-    config.devtool = false;
-    return config;
-  },
   
   // Compressione - HTTP/2 gestisce meglio la compressione, ma manteniamo gzip come fallback
   compress: true,
