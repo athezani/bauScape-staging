@@ -1,0 +1,11 @@
+{
+  "name": "bauScape-staging",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Staging repository - Root package.json for Vercel monorepo",
+  "workspaces": [
+    "ecommerce-homepage",
+    "baux-paws-access"
+  ]
+}
+
