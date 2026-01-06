@@ -6,6 +6,9 @@
   "workspaces": [
     "ecommerce-homepage",
     "baux-paws-access"
-  ]
+  ],
+  "dependencies": {
+    "next": "^16.1.1"
+  }
 }
 
