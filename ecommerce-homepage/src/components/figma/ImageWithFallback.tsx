@@ -7,9 +7,13 @@ const ERROR_IMG_SRC =
  * Valida se un URL è valido per essere usato come src di un'immagine
  * Accetta immagini locali, data URLs, e URL esterni da Supabase Storage
  */
+function isBlob(value: unknown): value is Blob {
+  return value instanceof Blob || (typeof value === 'object' && value !== null && 'size' in value && 'type' in value && typeof (value as Blob).slice === 'function');
+}
+
 function isValidImageUrl(url: string | Blob | null | undefined): boolean {
   // Blob non è supportato come URL diretto, deve essere convertito in object URL
-  if (url && typeof url === 'object' && url.constructor === Blob) {
+  if (isBlob(url)) {
     return false;
   }
   
@@ -65,7 +69,7 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
       return ERROR_IMG_SRC;
     }
     // Se src è un Blob, convertilo in object URL (non supportato, usa placeholder)
-    if (src && typeof src === 'object' && src.constructor === Blob) {
+    if (isBlob(src)) {
       return ERROR_IMG_SRC;
     }
     return (src as string) || ERROR_IMG_SRC;
@@ -73,7 +77,7 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
 
   // Se l'URL non è valido, mostra direttamente il placeholder
   if (!isValidImageUrl(src)) {
-    const originalUrlString = (src && typeof src === 'object' && src.constructor === Blob) ? '[Blob]' : (src || '[empty]');
+    const originalUrlString = isBlob(src) ? '[Blob]' : (src || '[empty]');
     return (
       <div
         className={`inline-block bg-gray-100 text-center align-middle ${className ?? ''}`}
@@ -97,7 +101,7 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
     );
   }
 
-  const originalUrlString = (src && typeof src === 'object' && src.constructor === Blob) ? '[Blob]' : (src || '[empty]');
+  const originalUrlString = isBlob(src) ? '[Blob]' : (src || '[empty]');
   
   return didError ? (
     <div
