@@ -5,12 +5,9 @@ const nextConfig = {
   // Mantenere compatibilità con struttura esistente
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   
-  // Disable Turbopack for build (has issues with Stripe bundling)
   // Turbopack config (Next.js 16 usa Turbopack di default)
   // src/pages-vite è già ignorato automaticamente perché non è nella struttura app/
-  experimental: {
-    turbo: false,
-  },
+  // Note: Turbopack disabled via build command (NEXT_TURBOPACK=0)
   
   // Source maps solo in sviluppo, non in produzione per sicurezza
   productionBrowserSourceMaps: false,
