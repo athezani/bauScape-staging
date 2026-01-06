@@ -41,35 +41,14 @@ if [ ! -d "node_modules/next" ]; then
   NODE_ENV=development npm install --legacy-peer-deps
 fi
 
-# Verifica che @types/react sia presente (necessario per TypeScript build)
-if [ ! -d "node_modules/@types/react" ]; then
-  echo "WARNING: @types/react not found! Installing..."
-  npm install @types/react@19.2.7 @types/react-dom@^19.2.3 --legacy-peer-deps --save-dev
-  # Verifica di nuovo dopo l'installazione
-  if [ ! -d "node_modules/@types/react" ]; then
-    echo "ERROR: @types/react installation failed!"
-    exit 1
-  fi
-fi
-
-# Assicurati che tutte le devDependencies siano installate prima del build
-echo "Ensuring all devDependencies are installed before build..."
-NODE_ENV=development npm install --legacy-peer-deps
-
-# Verifica esplicita che @types/react sia presente prima del build
+# Verifica che @types/react sia presente (ora è in dependencies, quindi dovrebbe essere già installato)
 echo "Checking for @types/react..."
 if [ ! -d "node_modules/@types/react" ]; then
-  echo "ERROR: @types/react still not found after installation! This will cause build failure."
-  echo "Attempting explicit installation..."
-  npm install @types/react@19.2.7 @types/react-dom@^19.2.3 --legacy-peer-deps --save-dev
-  if [ ! -d "node_modules/@types/react" ]; then
-    echo "ERROR: Failed to install @types/react. Build will fail."
-    exit 1
-  fi
-  echo "✅ @types/react installed successfully"
-else
-  echo "✅ @types/react found in node_modules"
+  echo "ERROR: @types/react not found! It should be in dependencies now."
+  echo "This indicates a problem with npm ci installation."
+  exit 1
 fi
+echo "✅ @types/react found in node_modules"
 
 # Verifica che il package sia accessibile a TypeScript
 echo "Verifying @types/react accessibility..."
