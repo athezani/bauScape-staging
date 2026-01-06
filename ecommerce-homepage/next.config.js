@@ -2,6 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   
+  // Imposta la root directory per il tracing dei file
+  // Questo risolve il problema con npm workspaces dove Next.js cerca nella root invece che in ecommerce-homepage/
+  outputFileTracingRoot: require('path').join(__dirname),
+  
   // Mantenere compatibilità con struttura esistente
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   
