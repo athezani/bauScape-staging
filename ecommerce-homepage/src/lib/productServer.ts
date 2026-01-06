@@ -83,7 +83,8 @@ export async function fetchProduct(
     
     // Load program
     try {
-      const { data: days, error: programError } = await supabase
+      logger.debug(`fetchProduct: Loading program for ${type}`, { id });
+      const { data: days, error: programError, status: programStatus } = await supabase
         .from('trip_program_day')
         .select(`
           id,
@@ -99,7 +100,17 @@ export async function fetchProduct(
         .eq('product_type', type)
         .order('day_number', { ascending: true });
 
-      if (!programError && days && days.length > 0) {
+      if (programError) {
+        logger.error('fetchProduct: Failed to load product program from DB', { 
+          error: programError.message,
+          details: programError.details,
+          hint: programError.hint,
+          code: programError.code,
+          status: programStatus,
+          id,
+          type
+        });
+      } else if (days && days.length > 0) {
         const programDays = days.map(day => ({
           id: day.id,
           day_number: day.day_number,
@@ -130,14 +141,25 @@ export async function fetchProduct(
 
     // Load secondary images
     try {
-      const { data: images, error: imagesError } = await supabase
+      logger.debug(`fetchProduct: Loading secondary images for ${type}`, { id });
+      const { data: images, error: imagesError, status: imagesStatus } = await supabase
         .from('product_images')
         .select('id, image_url, display_order')
         .eq('product_id', id)
         .eq('product_type', type)
         .order('display_order', { ascending: true });
 
-      if (!imagesError && images && images.length > 0) {
+      if (imagesError) {
+        logger.error('fetchProduct: Failed to load secondary images from DB', { 
+          error: imagesError.message,
+          details: imagesError.details,
+          hint: imagesError.hint,
+          code: imagesError.code,
+          status: imagesStatus,
+          id,
+          type
+        });
+      } else if (images && images.length > 0) {
         product.secondaryImages = images.map(img => ({
           id: img.id,
           url: img.image_url,

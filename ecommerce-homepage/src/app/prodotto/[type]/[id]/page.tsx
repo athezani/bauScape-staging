@@ -103,6 +103,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       notFound();
     }
     
+    console.log(`[ProductPage] Fetching product`, { id, type: productType });
     const { product, error } = await fetchProduct(id, productType);
     
     if (error) {
@@ -114,6 +115,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
       console.error(`[ProductPage] Product not found`, { id, type: productType });
       notFound();
     }
+    
+    console.log(`[ProductPage] Product fetched successfully`, { id, type: productType, title: product.title });
 
   // Structured data for product page
   const productUrl = `https://flixdog.com/prodotto/${type}/${id}`;
