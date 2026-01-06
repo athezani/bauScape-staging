@@ -57,6 +57,7 @@ echo "Ensuring all devDependencies are installed before build..."
 NODE_ENV=development npm install --legacy-peer-deps
 
 # Verifica esplicita che @types/react sia presente prima del build
+echo "Checking for @types/react..."
 if [ ! -d "node_modules/@types/react" ]; then
   echo "ERROR: @types/react still not found after installation! This will cause build failure."
   echo "Attempting explicit installation..."
@@ -66,7 +67,17 @@ if [ ! -d "node_modules/@types/react" ]; then
     exit 1
   fi
   echo "✅ @types/react installed successfully"
+else
+  echo "✅ @types/react found in node_modules"
 fi
+
+# Verifica che il package sia accessibile a TypeScript
+echo "Verifying @types/react accessibility..."
+if [ ! -f "node_modules/@types/react/index.d.ts" ]; then
+  echo "ERROR: @types/react/index.d.ts not found! Installation corrupted."
+  exit 1
+fi
+echo "✅ @types/react/index.d.ts exists"
 
 # Crea lo stub di source-map nella posizione che Next.js si aspetta
 # IMPORTANTE: Questo deve essere fatto PRIMA del build per assicurarsi che lo stub sia disponibile
