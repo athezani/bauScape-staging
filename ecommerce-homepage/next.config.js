@@ -16,6 +16,9 @@ const nextConfig = {
       'node_modules/next/dist/shared/**/*',
       'node_modules/source-map/**/*',
       'node_modules/source-map-js/**/*',
+      // Include esplicitamente lo stub di source-map che creiamo durante il build
+      'node_modules/next/dist/compiled/source-map/index.js',
+      'node_modules/next/dist/compiled/source-map/package.json',
     ],
   },
   

@@ -39,7 +39,23 @@ fi
 
 # Crea lo stub di source-map nella posizione che Next.js si aspetta
 echo "Creating source-map stub for Next.js..."
-node scripts/create-source-map-stub.js || echo "WARNING: Failed to create source-map stub (script might not exist yet)"
+if [ -f "scripts/create-source-map-stub.js" ]; then
+  node scripts/create-source-map-stub.js
+  if [ $? -eq 0 ]; then
+    echo "✅ Source-map stub created successfully"
+  else
+    echo "❌ WARNING: Failed to create source-map stub"
+  fi
+else
+  echo "❌ WARNING: create-source-map-stub.js not found"
+fi
+
+# Verifica che lo stub sia stato creato
+if [ -f "node_modules/next/dist/compiled/source-map/index.js" ]; then
+  echo "✅ Verified: source-map stub exists"
+else
+  echo "❌ WARNING: source-map stub was not created"
+fi
 
 echo "Building Next.js with webpack using workspace node_modules..."
 NODE_PATH="$ROOT_DIR/node_modules:$ROOT_DIR/ecommerce-homepage/node_modules:$NODE_PATH" npx --yes next build --webpack
