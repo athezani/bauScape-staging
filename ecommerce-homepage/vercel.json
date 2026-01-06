@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "npm run build:next",
+  "buildCommand": "cd .. && ./build-next-webpack.sh",
   "installCommand": "npm install --legacy-peer-deps",
   "redirects": [
     {
