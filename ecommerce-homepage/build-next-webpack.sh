@@ -29,6 +29,7 @@ fi
 # 2. Next.js TypeScript checker ha bisogno di @types/react durante il build
 # In produzione funziona perché le dipendenze sono già installate correttamente
 echo "Installing all dependencies (including Next.js and devDependencies) in ecommerce-homepage workspace..."
+# Forza l'installazione di devDependencies anche in produzione
 NODE_ENV=development npm install --legacy-peer-deps
 
 # Verifica che Next.js sia installato correttamente
@@ -44,6 +45,27 @@ fi
 if [ ! -d "node_modules/@types/react" ]; then
   echo "WARNING: @types/react not found! Installing..."
   npm install @types/react@19.2.7 @types/react-dom@^19.2.3 --legacy-peer-deps --save-dev
+  # Verifica di nuovo dopo l'installazione
+  if [ ! -d "node_modules/@types/react" ]; then
+    echo "ERROR: @types/react installation failed!"
+    exit 1
+  fi
+fi
+
+# Assicurati che tutte le devDependencies siano installate prima del build
+echo "Ensuring all devDependencies are installed before build..."
+NODE_ENV=development npm install --legacy-peer-deps
+
+# Verifica esplicita che @types/react sia presente prima del build
+if [ ! -d "node_modules/@types/react" ]; then
+  echo "ERROR: @types/react still not found after installation! This will cause build failure."
+  echo "Attempting explicit installation..."
+  npm install @types/react@19.2.7 @types/react-dom@^19.2.3 --legacy-peer-deps --save-dev
+  if [ ! -d "node_modules/@types/react" ]; then
+    echo "ERROR: Failed to install @types/react. Build will fail."
+    exit 1
+  fi
+  echo "✅ @types/react installed successfully"
 fi
 
 # Crea lo stub di source-map nella posizione che Next.js si aspetta
