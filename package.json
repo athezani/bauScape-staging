@@ -11,7 +11,7 @@
     "next": "^16.1.1"
   },
   "scripts": {
-    "build:next": "cd ecommerce-homepage && next build --webpack"
+    "build:next": "./build-next-webpack.sh"
   }
 }
 
