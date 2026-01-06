@@ -36,15 +36,21 @@ const nextConfig = {
   // Disabilita source maps anche per il server-side e crea alias per source-map
   // Questo risolve il problema con 'Cannot find module next/dist/compiled/source-map' su Vercel
   webpack: (config, { isServer, dev }) => {
-    if (!dev && isServer) {
-      // Disabilita source maps per il server in produzione
+    // Disabilita source maps sempre in produzione (sia client che server)
+    if (!dev) {
       config.devtool = false;
-      
-      // Crea alias per risolvere next/dist/compiled/source-map a source-map
+    }
+    
+    if (isServer) {
+      // Crea alias per risolvere next/dist/compiled/source-map allo stub che creiamo
       // Questo è necessario perché Next.js cerca source-map in next/dist/compiled/ ma non esiste
+      const path = require('path');
+      const stubPath = path.join(__dirname, 'node_modules', 'next', 'dist', 'compiled', 'source-map');
+      
       config.resolve.alias = {
         ...config.resolve.alias,
-        'next/dist/compiled/source-map': require.resolve('source-map'),
+        // Usa lo stub che creiamo durante il build invece di source-map diretto
+        'next/dist/compiled/source-map': stubPath,
       };
       
       // Aggiungi source-map-js solo se è installato

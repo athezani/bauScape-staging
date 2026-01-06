@@ -38,23 +38,33 @@ if [ ! -d "node_modules/@types/react" ]; then
 fi
 
 # Crea lo stub di source-map nella posizione che Next.js si aspetta
+# IMPORTANTE: Questo deve essere fatto PRIMA del build per assicurarsi che lo stub sia disponibile
 echo "Creating source-map stub for Next.js..."
 if [ -f "scripts/create-source-map-stub.js" ]; then
   node scripts/create-source-map-stub.js
   if [ $? -eq 0 ]; then
     echo "✅ Source-map stub created successfully"
   else
-    echo "❌ WARNING: Failed to create source-map stub"
+    echo "❌ ERROR: Failed to create source-map stub - build will likely fail"
+    exit 1
   fi
 else
-  echo "❌ WARNING: create-source-map-stub.js not found"
+  echo "❌ ERROR: create-source-map-stub.js not found - build will likely fail"
+  exit 1
 fi
 
-# Verifica che lo stub sia stato creato
+# Verifica che lo stub sia stato creato correttamente
 if [ -f "node_modules/next/dist/compiled/source-map/index.js" ]; then
-  echo "✅ Verified: source-map stub exists"
+  echo "✅ Verified: source-map stub exists at node_modules/next/dist/compiled/source-map/index.js"
+  # Verifica anche che il contenuto sia valido
+  if grep -q "SourceMapConsumer\|module.exports" "node_modules/next/dist/compiled/source-map/index.js"; then
+    echo "✅ Verified: source-map stub content is valid"
+  else
+    echo "❌ WARNING: source-map stub content may be invalid"
+  fi
 else
-  echo "❌ WARNING: source-map stub was not created"
+  echo "❌ ERROR: source-map stub was not created - build will likely fail"
+  exit 1
 fi
 
 echo "Building Next.js with webpack using workspace node_modules..."

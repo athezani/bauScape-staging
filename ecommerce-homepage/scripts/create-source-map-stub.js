@@ -18,28 +18,87 @@ if (!fs.existsSync(targetDir)) {
   console.log('Directory already exists:', targetDir);
 }
 
-// Crea index.js che re-exporta source-map
-// Se source-map non è disponibile, crea uno stub vuoto (i source maps sono disabilitati in produzione)
+// Crea index.js che re-exporta source-map con fallback completo
+// Questo stub deve essere compatibile con Next.js runtime che cerca il modulo
 let indexJs;
 try {
   // Prova a richiedere source-map
-  require.resolve('source-map');
-  // Se source-map esiste, re-exportalo
+  const sourceMapPath = require.resolve('source-map');
+  console.log('Found source-map at:', sourceMapPath);
+  
+  // Re-export source-map con path assoluto per evitare problemi di risoluzione
   indexJs = `// Re-export source-map from node_modules
 // This fixes the issue where Next.js looks for source-map in next/dist/compiled/ but it doesn't exist there
+const path = require('path');
+const sourceMapPath = path.join(__dirname, '..', '..', '..', '..', 'source-map');
+
 try {
-  module.exports = require('source-map');
+  // Try to require from node_modules
+  const sourceMap = require('source-map');
+  module.exports = sourceMap;
 } catch (e) {
-  // Fallback: create empty stub if source-map is not available
-  module.exports = {};
+  // Fallback: try relative path
+  try {
+    module.exports = require(sourceMapPath);
+  } catch (e2) {
+    // Final fallback: create minimal stub
+    console.warn('source-map not found, using minimal stub');
+    module.exports = {
+      SourceMapConsumer: class {
+        constructor() {}
+        then() { return Promise.resolve(this); }
+      },
+      SourceMapGenerator: class {
+        constructor() {}
+        addMapping() {}
+        setSourceContent() {}
+        toString() { return ''; }
+      },
+      SourceNode: class {
+        constructor() {}
+        toString() { return ''; }
+      }
+    };
+  }
 }
 `;
 } catch (e) {
-  // Se source-map non esiste, crea uno stub vuoto
-  console.log('⚠️ source-map not found, creating empty stub');
-  indexJs = `// Empty stub for source-map (source maps are disabled in production)
+  // Se source-map non esiste, crea uno stub completo con tutte le classi necessarie
+  console.log('⚠️ source-map not found, creating complete stub');
+  indexJs = `// Complete stub for source-map (source maps are disabled in production)
 // This fixes the issue where Next.js looks for source-map in next/dist/compiled/ but it doesn't exist there
-module.exports = {};
+
+// Minimal implementation that satisfies Next.js runtime requirements
+class SourceMapConsumer {
+  constructor() {}
+  then() { return Promise.resolve(this); }
+  get originalPositionFor() { return {}; }
+  get generatedPositionFor() { return {}; }
+  get allGeneratedPositionsFor() { return []; }
+  get hasContentsOfAllSources() { return false; }
+  get sourceContentFor() { return null; }
+  get destroy() { return () => {}; }
+}
+
+class SourceMapGenerator {
+  constructor() {}
+  addMapping() {}
+  setSourceContent() {}
+  toString() { return ''; }
+  toJSON() { return { version: 3, sources: [], mappings: '' }; }
+}
+
+class SourceNode {
+  constructor() {}
+  toString() { return ''; }
+  toStringWithSourceMap() { return { code: '', map: null }; }
+}
+
+module.exports = {
+  SourceMapConsumer,
+  SourceMapGenerator,
+  SourceNode
+};
 `;
 }
 
