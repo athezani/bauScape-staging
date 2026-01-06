@@ -5,45 +5,12 @@ const nextConfig = {
   // Mantenere compatibilità con struttura esistente
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   
+  // Turbopack disabilitato - Stripe v17.0.0 non è compatibile con Turbopack
+  // Usiamo webpack invece (specificato con --webpack nel build script)
+  // src/pages-vite è già ignorato automaticamente perché non è nella struttura app/
+  
   // Source maps solo in sviluppo, non in produzione per sicurezza
   productionBrowserSourceMaps: false,
-  
-  // Webpack configuration per gestire correttamente Stripe
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // Per server-side, assicurati che Stripe sia risolto correttamente
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-      };
-      
-      // Configurazione per risolvere correttamente i moduli ESM di Stripe
-      config.resolve.extensionAlias = {
-        '.js': ['.js', '.ts', '.tsx'],
-        '.jsx': ['.jsx', '.tsx'],
-      };
-      
-      // Assicura che webpack risolva correttamente i moduli ESM
-      config.resolve.conditionNames = ['require', 'node', 'import'];
-      
-      // Configurazione per gestire i moduli ESM di Stripe
-      config.module = config.module || {};
-      config.module.rules = config.module.rules || [];
-      
-      // Aggiungi regola per gestire i moduli ESM di Stripe
-      config.module.rules.push({
-        test: /node_modules\/stripe\/esm\/.*\.js$/,
-        type: 'javascript/auto',
-        resolve: {
-          fullySpecified: false,
-        },
-      });
-    }
-    
-    return config;
-  },
   
   // Compressione - HTTP/2 gestisce meglio la compressione, ma manteniamo gzip come fallback
   compress: true,
