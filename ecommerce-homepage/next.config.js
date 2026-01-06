@@ -5,12 +5,28 @@ const nextConfig = {
   // Mantenere compatibilità con struttura esistente
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   
-  // Turbopack config (Next.js 16 usa Turbopack di default)
-  // src/pages-vite è già ignorato automaticamente perché non è nella struttura app/
-  // Note: Turbopack disabled via build command (NEXT_TURBOPACK=0)
+  // Disabilita Turbopack esplicitamente - usa webpack per compatibilità con Stripe
+  experimental: {
+    turbo: false,
+  },
   
   // Source maps solo in sviluppo, non in produzione per sicurezza
   productionBrowserSourceMaps: false,
+  
+  // Webpack configuration per gestire correttamente Stripe
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Per server-side, assicurati che Stripe sia risolto correttamente
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    
+    return config;
+  },
   
   // Compressione - HTTP/2 gestisce meglio la compressione, ma manteniamo gzip come fallback
   compress: true,
